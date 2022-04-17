@@ -13,6 +13,7 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Jetstream\Jetstream;
 use Livewire\Livewire;
 use App\Http\Livewire\Profile\UpdateNotificationInformationForm;
+use App\Http\Livewire\Frontend\NavigationMenu;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
@@ -47,7 +48,11 @@ class JetstreamServiceProvider extends ServiceProvider
          * Register livewire components here
          * */
         Livewire::component('profile.update-notification-information-form', UpdateNotificationInformationForm::class);
-
+        /**
+         * 04-17-2022
+         * Frontend Navigation menu
+         */
+        Livewire::component('frontend.navigation-menu', NavigationMenu::class);
 
     }
 
