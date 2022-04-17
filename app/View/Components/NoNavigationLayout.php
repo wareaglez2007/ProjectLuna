@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class profile.UpdateNotificationInformationForm extends Component
+class NoNavigationLayout extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class profile.UpdateNotificationInformationForm extends Component
      */
     public function render()
     {
-        return view('components.profile.-update-notification-information-form');
+        return view('layouts.no-navigation-layout');
     }
 }

@@ -440,14 +440,38 @@
 
             </div>
 
-            <div class="border-t border-gray-200 py-6 px-4 space-y-6">
-                <div class="flow-root">
-                    <a href="#" class="-m-2 p-2 block font-medium text-gray-900">Sign in</a>
+            <!---Mobile login and register-->
+            @if (Route::has('login'))
+                <div class="border-t border-gray-200 py-6 px-4 space-y-6">
+                    @if (Route::has('login'))
+                        {{-- <div> --}}
+                        @auth
+                            <div class="flow-root">
+                                <a href="{{ url('/dashboard') }}"
+                                    class="-m-2 p-2 block font-medium text-gray-900">{{ __('Dashboard') }}</a>
+                            </div>
+                        @else
+                            <div class="flow-root">
+                                <a href="{{ route('login') }}" class="-m-2 p-2 block font-medium text-gray-900">Sign
+                                    in</a>
+
+                            </div>
+                            @if (Route::has('register'))
+                                <div class="flow-root">
+                                    <span class="h-6 w-px bg-gray-200" aria-hidden="true"></span>
+                                    <a href="{{ route('register') }}"
+                                        class="-m-2 p-2 block font-medium text-gray-900">Create
+                                        account</a>
+                                </div>
+                            @endif
+                        @endauth
+                        {{-- </div> --}}
+                    @endif
                 </div>
-                <div class="flow-root">
-                    <a href="#" class="-m-2 p-2 block font-medium text-gray-900">Create account</a>
-                </div>
-            </div>
+            @endif
+            <!-- End mobile login and register-->
+
+
 
             <div class="border-t border-gray-200 py-6 px-4">
                 <a href="#" class="-m-2 p-2 flex items-center">
@@ -944,6 +968,7 @@
 
                                 </div>
                             @endif
+                        </div>
                     @endif
 
                     <div class="hidden lg:ml-8 lg:flex">
