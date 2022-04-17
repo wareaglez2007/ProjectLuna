@@ -11,6 +11,8 @@ use App\Actions\Jetstream\RemoveTeamMember;
 use App\Actions\Jetstream\UpdateTeamName;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Jetstream\Jetstream;
+use Livewire\Livewire;
+use App\Http\Livewire\Profile\UpdateNotificationInformationForm;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
@@ -40,6 +42,13 @@ class JetstreamServiceProvider extends ServiceProvider
         Jetstream::removeTeamMembersUsing(RemoveTeamMember::class);
         Jetstream::deleteTeamsUsing(DeleteTeam::class);
         Jetstream::deleteUsersUsing(DeleteUser::class);
+        /**
+         * RS 04-17-2022
+         * Register livewire components here
+         * */
+        Livewire::component('profile.update-notification-information-form', UpdateNotificationInformationForm::class);
+
+
     }
 
     /**

@@ -40,6 +40,13 @@
                     @livewire('profile.delete-user-form')
                 </div>
             @endif
+            {{-- RS 04-17-2022 Adding Notifications settings for user profiles --}}
+            <x-jet-section-border />
+            <div class="mt-10 sm:mt-0">
+                @livewire('profile.update-notification-information-form')
+            </div>
+
+
         </div>
     </div>
 </x-app-layout>
