@@ -14,6 +14,7 @@ use Laravel\Jetstream\Jetstream;
 use Livewire\Livewire;
 use App\Http\Livewire\Profile\UpdateNotificationInformationForm;
 use App\Http\Livewire\Frontend\NavigationMenu;
+use App\Http\Livewire\NavigationMenuWithSideBar;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
@@ -53,6 +54,13 @@ class JetstreamServiceProvider extends ServiceProvider
          * Frontend Navigation menu
          */
         Livewire::component('frontend.navigation-menu', NavigationMenu::class);
+        /**
+         * 04-17-2022
+         * Backend Navigation menu
+         * Based on https://tailwindui.com/components/application-ui/application-shells/sidebar
+         * option: Light sidebar with light header
+         */
+        Livewire::component('navigation-menu-with-side-bar', NavigationMenuWithSideBar::class);
 
     }
 
