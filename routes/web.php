@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\livewire\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,9 +32,8 @@ Route::middleware([
             return view('dashboard');
         })->name('dashboard');
 
-        Route::get('/projects', [UserProfileController::class, 'show'], function () {
-            return view('dashboard');
-        })->name('projects.show');
+        Route::get('/projects', [ProjectController::class, 'show'])
+        ->name('project.show');
 
 });
 

@@ -105,7 +105,7 @@
                         Team
                     </a>
 
-                    <a href="{{ route('projects.show', Auth::user()->id) }}"
+                    <a href="{{ route('project.show') }}"
                         class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
@@ -201,7 +201,7 @@
                         Team
                     </a>
 
-                    <a href="{{ route('projects.show', Auth::user()->id) }}"
+                    <a href="{{ route('project.show') }}"
                         class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
