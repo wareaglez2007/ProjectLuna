@@ -447,7 +447,7 @@
                         {{-- <div> --}}
                         @auth
                             <div class="flow-root">
-                                <a href="{{ url('/dashboard') }}"
+                                <a href="{{ route('dashboard') }}"
                                     class="-m-2 p-2 block font-medium text-gray-900">{{ __('Dashboard') }}</a>
                             </div>
                         @else
@@ -952,7 +952,7 @@
                             @if (Route::has('login'))
                                 <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                                     @auth
-                                        <a href="{{ url('/dashboard') }}"
+                                        <a href="{{ route('dashboard') }}"
                                             class="text-sm font-medium text-gray-700 hover:text-gray-800">{{ __('Dashboard') }}</a>
                                     @else
                                         <a href="{{ route('login') }}"

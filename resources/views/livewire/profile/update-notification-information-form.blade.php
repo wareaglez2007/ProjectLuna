@@ -1,10 +1,10 @@
 <x-jet-action-section>
     <x-slot name="title">
-        {{ __('Update Password') }}
+        {{ __('Annual Billing') }}
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Ensure your account is using a long, random password to stay secure.') }}
+        {{ __('Turn on auto-payments.') }}
     </x-slot>
     <x-slot name="content">
         <!-- This example requires Tailwind CSS v2.0+ -->
