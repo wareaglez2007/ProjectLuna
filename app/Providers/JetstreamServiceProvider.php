@@ -9,12 +9,14 @@ use App\Actions\Jetstream\DeleteUser;
 use App\Actions\Jetstream\InviteTeamMember;
 use App\Actions\Jetstream\RemoveTeamMember;
 use App\Actions\Jetstream\UpdateTeamName;
+use App\Http\Livewire\CreateProjectForm;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Jetstream\Jetstream;
 use Livewire\Livewire;
 use App\Http\Livewire\Profile\UpdateNotificationInformationForm;
 use App\Http\Livewire\Frontend\NavigationMenu;
 use App\Http\Livewire\NavigationMenuWithSideBar;
+use App\Http\Livewire\UpdateProjectForm;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
@@ -61,6 +63,15 @@ class JetstreamServiceProvider extends ServiceProvider
          * option: Light sidebar with light header
          */
         Livewire::component('navigation-menu-with-side-bar', NavigationMenuWithSideBar::class);
+        /**
+         * 04-27-2022
+         * Add components here ...
+         */
+        /**
+         * Proejcts Sections <Keep clean>
+         */
+        Livewire::component('project.create-project-form', CreateProjectForm::class);
+        Livewire::component('project.update-project-form', UpdateProjectForm::class);
 
     }
 

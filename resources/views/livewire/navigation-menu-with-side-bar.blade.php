@@ -24,7 +24,7 @@
 -->
 <div>
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-    <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 z-40 flex md:hidden" role="dialog" aria-modal="true">
         <!--
         Off-canvas menu overlay, show/hide based on off-canvas menu state.
 
@@ -47,7 +47,7 @@
           From: "translate-x-0"
           To: "-translate-x-full"
       -->
-        <div class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-gray-800">
+        <div class="relative flex w-full max-w-xs flex-1 flex-col bg-gray-800 pt-5 pb-4">
             <!--
           Close button, show/hide based on off-canvas menu state.
 
@@ -60,7 +60,7 @@
         -->
             <div class="absolute top-0 right-0 -mr-12 pt-2">
                 <button type="button"
-                    class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                    class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span class="sr-only">Close sidebar</span>
                     <!-- Heroicon name: outline/x -->
                     <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -71,21 +71,21 @@
                 </button>
             </div>
 
-            <div class="flex-shrink-0 flex items-center px-4">
+            <div class="flex flex-shrink-0 items-center px-4">
                 <img class="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow">
             </div>
-            <div class="mt-5 flex-1 h-0 overflow-y-auto">
-                <nav class="px-2 space-y-1">
+            <div class="mt-5 h-0 flex-1 overflow-y-auto">
+                <nav class="space-y-1 px-2">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                     <a href="#"
-                        class="bg-gray-900 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                        class="group flex items-center rounded-md bg-gray-900 px-2 py-2 text-base font-medium text-white">
                         <!--
                 Heroicon name: outline/home
 
                 Current: "text-gray-300", Default: "text-gray-400 group-hover:text-gray-300"
               -->
-                        <svg class="text-gray-300 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+                        <svg class="mr-4 h-6 w-6 flex-shrink-0 text-gray-300" xmlns="http://www.w3.org/2000/svg"
                             fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -94,9 +94,9 @@
                     </a>
 
                     <a href="#"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                        class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/users -->
-                        <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
+                        <svg class="mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -106,9 +106,9 @@
                     </a>
 
                     <a href="{{ route('project.show') }}"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                        class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/folder -->
-                        <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
+                        <svg class="mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -118,9 +118,9 @@
                     </a>
 
                     <a href="#"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                        class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/calendar -->
-                        <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
+                        <svg class="mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -130,9 +130,9 @@
                     </a>
 
                     <a href="#"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                        class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/inbox -->
-                        <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
+                        <svg class="mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -142,9 +142,9 @@
                     </a>
 
                     <a href="#"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                        class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/chart-bar -->
-                        <svg class="text-gray-400 group-hover:text-gray-300 mr-4 flex-shrink-0 h-6 w-6"
+                        <svg class="mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -156,27 +156,27 @@
             </div>
         </div>
 
-        <div class="flex-shrink-0 w-14" aria-hidden="true">
+        <div class="w-14 flex-shrink-0" aria-hidden="true">
             <!-- Dummy element to force sidebar to shrink to fit close icon -->
         </div>
     </div>
 
     <!-- Static sidebar for desktop -->
-    <div class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
+    <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
         <!-- Sidebar component, swap this element with another sidebar if you like -->
-        <div class="flex-1 flex flex-col min-h-0 bg-gray-800">
-            <div class="flex items-center h-16 flex-shrink-0 px-4 bg-gray-900">
+        <div class="flex min-h-0 flex-1 flex-col bg-gray-800">
+            <div class="flex h-16 flex-shrink-0 items-center bg-gray-900 px-4">
                 <img class="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow">
             </div>
-            <div class="flex-1 flex flex-col overflow-y-auto">
-                <nav class="flex-1 px-2 py-4 space-y-1">
+            <div class="flex flex-1 flex-col overflow-y-auto">
+                <nav class="flex-1 space-y-1 px-2 py-4">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                     <a href="{{ route('dashboard') }}"
-                        class="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                        class="group flex items-center rounded-md bg-gray-900 px-2 py-2 text-sm font-medium text-white"
                         x-state:on="Current" x-state:off="Default"
                         x-state-description="Current: &quot;bg-gray-900 text-white&quot;, Default: &quot;text-gray-300 hover:bg-gray-700 hover:text-white&quot;">
-                        <svg class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6" x-state:on="Current" x-state:off="Default"
+                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-300" x-state:on="Current" x-state:off="Default"
                             x-state-description="Current: &quot;text-gray-300&quot;, Default: &quot;text-gray-400 group-hover:text-gray-300&quot;"
                             x-description="Heroicon name: outline/home" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -188,9 +188,9 @@
                     </a>
 
                     <a href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                        class="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                         x-state-description="undefined: &quot;bg-gray-900 text-white&quot;, undefined: &quot;text-gray-300 hover:bg-gray-700 hover:text-white&quot;">
-                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
+                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
                             x-state-description="undefined: &quot;text-gray-300&quot;, undefined: &quot;text-gray-400 group-hover:text-gray-300&quot;"
                             x-description="Heroicon name: outline/users" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -202,9 +202,9 @@
                     </a>
 
                     <a href="{{ route('project.show') }}"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        class="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/folder -->
-                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
+                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -214,9 +214,9 @@
                     </a>
 
                     <a href="#"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        class="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/calendar -->
-                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
+                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -226,9 +226,9 @@
                     </a>
 
                     <a href="#"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        class="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/inbox -->
-                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
+                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -238,9 +238,9 @@
                     </a>
 
                     <a href="#"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        class="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/chart-bar -->
-                        <svg class="text-gray-400 group-hover:text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
+                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -252,10 +252,10 @@
             </div>
         </div>
     </div>
-    <div class="md:pl-64 flex flex-col">
-        <div class="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white shadow">
+    <div class="flex flex-col md:pl-64">
+        <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow">
             <button type="button"
-                class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+                class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
                 @click="open = true">
                 <span class="sr-only">Open sidebar</span>
                 <svg class="h-6 w-6" x-description="Heroicon name: outline/menu-alt-2"
@@ -266,12 +266,12 @@
                 </svg>
             </button>
             {{-- Search, Notifications, teams, settings dropdown --}}
-            <div class="flex-1 px-4 flex justify-between">
-                <div class="flex-1 flex">
-                    <form class="w-full flex md:ml-0" action="#" method="GET">
+            <div class="flex flex-1 justify-between px-4">
+                <div class="flex flex-1">
+                    <form class="flex w-full md:ml-0" action="#" method="GET">
                         <label for="search-field" class="sr-only">Search</label>
                         <div class="relative w-full text-gray-400 focus-within:text-gray-600">
-                            <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
+                            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center">
                                 <!-- Heroicon name: solid/search -->
                                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                     fill="currentColor" aria-hidden="true">
@@ -281,7 +281,7 @@
                                 </svg>
                             </div>
                             <input id="search-field"
-                                class="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm"
+                                class="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm"
                                 placeholder="Search" type="search" name="search">
                         </div>
                     </form>
@@ -289,7 +289,7 @@
                 {{-- Right top side of backend navigation --}}
                 <div class="ml-4 flex items-center md:ml-6">
                     <button type="button"
-                        class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        class="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         <span class="sr-only">View notifications</span>
                         <!-- Heroicon name: outline/bell -->
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -301,11 +301,11 @@
 
                     <!-- Profile dropdown -->
                     <div x-data="({ open: false })" @keydown.escape.stop=" open = false;" @click.away="open=false"
-                        class="ml-3 relative">
+                        class="relative ml-3">
                         <div>
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                 <button
-                                    class="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                     id="user-menu-button" x-ref="button" @click=" open= !open">
                                     <img class="h-8 w-8 rounded-full object-cover"
                                         src="{{ Auth::user()->profile_photo_url }}"
@@ -314,7 +314,7 @@
                             @else
                                 <span class="inline-flex rounded-md">
                                     <button type="button"
-                                        class="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                        class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                         id="user-menu-button" x-ref="button" @click=" open= !open">
                                         {{ Auth::user()->name }}
                                         <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -334,7 +334,7 @@
                             x-transition:leave="transition ease-in duration-75"
                             x-transition:leave-start="transform opacity-100 scale-100"
                             x-transition:leave-end="transform opacity-0 scale-95"
-                            class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                            class="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                             x-ref="menu-items" x-description="Dropdown menu, show/hide based on menu state." role="menu"
                             aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1"
                             @keydown.tab="open = false" @keydown.enter.prevent="open = false"
