@@ -22,9 +22,9 @@
   <body class="h-full">
   ```
 -->
-<div>
+<div x-data="{ open: false }" @keydown.window.escape="open = false">
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-    <div class="fixed inset-0 z-40 flex md:hidden" role="dialog" aria-modal="true">
+    <div x-show="open" class="fixed inset-0 z-40 flex md:hidden" role="dialog" aria-modal="true">
         <!--
         Off-canvas menu overlay, show/hide based on off-canvas menu state.
 
@@ -35,7 +35,13 @@
           From: "opacity-100"
           To: "opacity-0"
       -->
-        <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
+        <div x-show="open" x-transition:enter="transition-opacity ease-linear duration-300"
+            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+            x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0" class="fixed inset-0 bg-gray-600 bg-opacity-75"
+            x-description="Off-canvas menu overlay, show/hide based on off-canvas menu state." @click="open = false"
+            aria-hidden="true">
+        </div>
 
         <!--
         Off-canvas menu, show/hide based on off-canvas menu state.
@@ -47,7 +53,12 @@
           From: "translate-x-0"
           To: "-translate-x-full"
       -->
-        <div class="relative flex w-full max-w-xs flex-1 flex-col bg-gray-800 pt-5 pb-4">
+        <div x-show="open" x-transition:enter="transition ease-in-out duration-300 transform"
+            x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0"
+            x-transition:leave="transition ease-in-out duration-300 transform" x-transition:leave-start="translate-x-0"
+            x-transition:leave-end="-translate-x-full"
+            x-description="Off-canvas menu, show/hide based on off-canvas menu state."
+            class="relative flex w-full max-w-xs flex-1 flex-col bg-gray-800 pt-5 pb-4">
             <!--
           Close button, show/hide based on off-canvas menu state.
 
@@ -58,9 +69,15 @@
             From: "opacity-100"
             To: "opacity-0"
         -->
-            <div class="absolute top-0 right-0 -mr-12 pt-2">
+            <div x-show="open" x-transition:enter="ease-in-out duration-300" x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100" x-transition:leave="ease-in-out duration-300"
+                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                x-description="Close button, show/hide based on off-canvas menu state."
+                class="absolute top-0 right-0 -mr-12 pt-2">
                 <button type="button"
-                    class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                    class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    @click="open = false">
+
                     <span class="sr-only">Close sidebar</span>
                     <!-- Heroicon name: outline/x -->
                     <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -77,45 +94,40 @@
             </div>
             <div class="mt-5 h-0 flex-1 overflow-y-auto">
                 <nav class="space-y-1 px-2">
-                    <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <a href="#"
-                        class="group flex items-center rounded-md bg-gray-900 px-2 py-2 text-base font-medium text-white">
-                        <!--
-                Heroicon name: outline/home
-
-                Current: "text-gray-300", Default: "text-gray-400 group-hover:text-gray-300"
-              -->
-                        <svg class="mr-4 h-6 w-6 flex-shrink-0 text-gray-300" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <x-current-active-links href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-300" x-state:on="Current" x-state:off="Default"
+                            x-state-description="Current: &quot;text-gray-300&quot;, Default: &quot;text-gray-400 group-hover:text-gray-300&quot;"
+                            x-description="Heroicon name: outline/home" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                            </path>
                         </svg>
-                        Dashboard
-                    </a>
-
-                    <a href="#"
-                        class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
-                        <!-- Heroicon name: outline/users -->
-                        <svg class="mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            aria-hidden="true">
+                        {{ __('Dashboard') }}
+                    </x-current-active-links>
+                    <x-current-active-links href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
+                        :active="request()->routeIs('teams.show')">
+                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
+                            x-state-description="undefined: &quot;text-gray-300&quot;, undefined: &quot;text-gray-400 group-hover:text-gray-300&quot;"
+                            x-description="Heroicon name: outline/users" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                            </path>
                         </svg>
-                        Team
-                    </a>
+                        {{ __('Teams') }}
+                    </x-current-active-links>
 
-                    <a href="{{ route('project.show') }}"
-                        class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                    <x-current-active-links href="{{ route('project.show') }}" :active="request()->routeIs('project.show')">
                         <!-- Heroicon name: outline/folder -->
-                        <svg class="mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
+                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                         </svg>
-                        Projects
-                    </a>
+                        {{ __('Projects') }}
+                    </x-current-active-links>
 
                     <a href="#"
                         class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
@@ -171,11 +183,7 @@
             </div>
             <div class="flex flex-1 flex-col overflow-y-auto">
                 <nav class="flex-1 space-y-1 px-2 py-4">
-                    <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <a href="{{ route('dashboard') }}"
-                        class="group flex items-center rounded-md bg-gray-900 px-2 py-2 text-sm font-medium text-white"
-                        x-state:on="Current" x-state:off="Default"
-                        x-state-description="Current: &quot;bg-gray-900 text-white&quot;, Default: &quot;text-gray-300 hover:bg-gray-700 hover:text-white&quot;">
+                    <x-current-active-links href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-300" x-state:on="Current" x-state:off="Default"
                             x-state-description="Current: &quot;text-gray-300&quot;, Default: &quot;text-gray-400 group-hover:text-gray-300&quot;"
                             x-description="Heroicon name: outline/home" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -184,12 +192,11 @@
                                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
                             </path>
                         </svg>
-                        Dashboard
-                    </a>
-
-                    <a href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
-                        class="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                        x-state-description="undefined: &quot;bg-gray-900 text-white&quot;, undefined: &quot;text-gray-300 hover:bg-gray-700 hover:text-white&quot;">
+                        {{ __('Dashboard') }}
+                    </x-current-active-links>
+                    <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                    <x-current-active-links href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
+                        :active="request()->routeIs('teams.show')">
                         <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
                             x-state-description="undefined: &quot;text-gray-300&quot;, undefined: &quot;text-gray-400 group-hover:text-gray-300&quot;"
                             x-description="Heroicon name: outline/users" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -198,11 +205,10 @@
                                 d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
                             </path>
                         </svg>
-                        Team
-                    </a>
+                        {{ __('Teams') }}
+                    </x-current-active-links>
 
-                    <a href="{{ route('project.show') }}"
-                        class="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                    <x-current-active-links href="{{ route('project.show') }}" :active="request()->routeIs('project.show')">
                         <!-- Heroicon name: outline/folder -->
                         <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -210,8 +216,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                         </svg>
-                        Projects
-                    </a>
+                        {{ __('Projects') }}
+                    </x-current-active-links>
 
                     <a href="#"
                         class="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
@@ -379,4 +385,3 @@
             </div>
             {{-- End of Search, Notifications, teams, settings dropdown Container --}}
         </div>
-        {{-- End of navigation with side bar --}}
