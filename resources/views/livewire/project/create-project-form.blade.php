@@ -1,20 +1,20 @@
 <div>
     {{-- Project form goes here --}}
     <!--
-  This example requires Tailwind CSS v2.0+
+This example requires Tailwind CSS v2.0+
 
-  This example requires some changes to your config:
+This example requires some changes to your config:
 
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
+```
+// tailwind.config.js
+module.exports = {
+// ...
+plugins: [
+// ...
+require('@tailwindcss/forms'),
+],
+}
+```
 -->
     <form action="#" class="relative">
         <div
@@ -52,10 +52,10 @@
                             class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
                             aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
                             <!--
-                Placeholder icon, show/hide based on listbox state.
+Placeholder icon, show/hide based on listbox state.
 
-                Heroicon name: solid/user-circle
-              -->
+Heroicon name: solid/user-circle
+-->
                             <svg class="flex-shrink-0 w-5 h-5 text-gray-300 sm:-ml-1" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd"
@@ -72,29 +72,27 @@
                         </button>
 
                         <!--
-              Select popover, show/hide based on select state.
+Select popover, show/hide based on select state.
 
-              Entering: ""
-                From: ""
-                To: ""
-              Leaving: "transition ease-in duration-100"
-                From: "opacity-100"
-                To: "opacity-0"
-            -->
+Entering: ""
+From: ""
+To: ""
+Leaving: "transition ease-in duration-100"
+From: "opacity-100"
+To: "opacity-0"
+-->
                         <ul x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
                             x-transition:leave-end="opacity-0"
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                             aria-activedescendant="listbox-option-0" x-show="open" @click.outside="open = false">
                             <!--
-                Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
+Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-                Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
-              -->
-                            <li x-state:on="Highlighted" x-state:off="Not Highlighted"
-                                class="relative px-3 py-2 bg-white cursor-default select-none"
-                                x-description="Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation."
-                                id="listbox-option-0" role="option" @click="choose(0)" @mouseenter="activeIndex = 0"
+Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
+-->
+                            <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-0"
+                                role="option" @click="choose(0)" @mouseenter="activeIndex = 0"
                                 @mouseleave="activeIndex = null"
                                 :class="{ 'bg-gray-100': activeIndex === 0, 'bg-white': !(activeIndex === 0) }">
                                 <div class="flex items-center">
@@ -110,12 +108,14 @@
                             </li>
 
                             <!--
-                Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
+Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-                Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
-              -->
+Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
+-->
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-1"
-                                role="option">
+                                role="option" id="listbox-option-0" role="option" @click="choose(0)"
+                                @mouseenter="activeIndex = 1" @mouseleave="activeIndex = null"
+                                :class="{ 'bg-gray-100': activeIndex === 1, 'bg-white': !(activeIndex === 1) }">
                                 <div class="flex items-center">
                                     <img src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                         alt="" class="flex-shrink-0 w-5 h-5 rounded-full">
@@ -130,15 +130,15 @@
 
                 <div class="flex-shrink-0">
                     <label id="listbox-label" class="sr-only"> Add a label </label>
-                    <div class="relative" x-data="{ open: false }">
+                    <div class="relative" x-data="{ open: false, selectedIndex: 0, activeIndex: 0 }">
                         <button type="button" x-on:click="open = ! open"
                             class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
                             aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
                             <!--
-                Heroicon name: solid/tag
+Heroicon name: solid/tag
 
-                Selected: "text-gray-300", Default: "text-gray-500"
-              -->
+Selected: "text-gray-300", Default: "text-gray-500"
+-->
                             <svg class="flex-shrink-0 w-5 h-5 text-gray-300 sm:-ml-1" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd"
@@ -150,39 +150,43 @@
                         </button>
 
                         <!--
-              Select popover, show/hide based on select state.
+Select popover, show/hide based on select state.
 
-              Entering: ""
-                From: ""
-                To: ""
-              Leaving: "transition ease-in duration-100"
-                From: "opacity-100"
-                To: "opacity-0"
-            -->
+Entering: ""
+From: ""
+To: ""
+Leaving: "transition ease-in duration-100"
+From: "opacity-100"
+To: "opacity-0"
+-->
                         <ul x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
                             x-transition:leave-end="opacity-0"
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                             aria-activedescendant="listbox-option-0" x-show="open" @click.outside="open = false">
                             <!--
-                Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
+Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-                Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
-              -->
+Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
+-->
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-0"
-                                role="option">
+                                role="option" id="listbox-option-0" role="option" @click="choose(0)"
+                                @mouseenter="activeIndex = 0" @mouseleave="activeIndex = null"
+                                :class="{ 'bg-gray-100': activeIndex === 0, 'bg-white': !(activeIndex === 0) }">
                                 <div class="flex items-center">
                                     <span class="block font-medium truncate"> Unlabelled </span>
                                 </div>
                             </li>
 
                             <!--
-                Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
+Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-                Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
-              -->
+Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
+-->
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-1"
-                                role="option">
+                                role="option" id="listbox-option-0" role="option" @click="choose(0)"
+                                @mouseenter="activeIndex = 1" @mouseleave="activeIndex = null"
+                                :class="{ 'bg-gray-100': activeIndex === 1, 'bg-white': !(activeIndex === 1) }">
                                 <div class="flex items-center">
                                     <span class="block font-medium truncate"> Engineering </span>
                                 </div>
@@ -195,15 +199,15 @@
 
                 <div class="flex-shrink-0">
                     <label id="listbox-label" class="sr-only"> Add a due date </label>
-                    <div class="relative" x-data="{ open: false }">
+                    <div class="relative" x-data="{ open: false, selectedIndex: 0, activeIndex: 0 }">
                         <button type="button" x-on:click="open = ! open"
                             class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
                             aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
                             <!--
-                Heroicon name: solid/calendar
+Heroicon name: solid/calendar
 
-                Selected: "text-gray-300", Default: "text-gray-500"
-              -->
+Selected: "text-gray-300", Default: "text-gray-500"
+-->
                             <svg class="flex-shrink-0 w-5 h-5 text-gray-300 sm:-ml-1" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd"
@@ -215,39 +219,43 @@
                         </button>
 
                         <!--
-              Select popover, show/hide based on select state.
+Select popover, show/hide based on select state.
 
-              Entering: ""
-                From: ""
-                To: ""
-              Leaving: "transition ease-in duration-100"
-                From: "opacity-100"
-                To: "opacity-0"
-            -->
+Entering: ""
+From: ""
+To: ""
+Leaving: "transition ease-in duration-100"
+From: "opacity-100"
+To: "opacity-0"
+-->
                         <ul x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
                             x-transition:leave-end="opacity-0"
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                             aria-activedescendant="listbox-option-0" x-show="open" @click.outside="open = false">
                             <!--
-                Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
+Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-                Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
-              -->
+Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
+-->
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-0"
-                                role="option">
+                                role="option" id="listbox-option-0" role="option" @click="choose(0)"
+                                @mouseenter="activeIndex = 0" @mouseleave="activeIndex = null"
+                                :class="{ 'bg-gray-100': activeIndex === 0, 'bg-white': !(activeIndex === 0) }">
                                 <div class="flex items-center">
                                     <span class="block font-medium truncate"> No due date </span>
                                 </div>
                             </li>
 
                             <!--
-                Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
+Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-                Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
-              -->
+Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
+-->
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-1"
-                                role="option">
+                                role="option" id="listbox-option-0" role="option" @click="choose(0)"
+                                @mouseenter="activeIndex = 1" @mouseleave="activeIndex = null"
+                                :class="{ 'bg-gray-100': activeIndex === 1, 'bg-white': !(activeIndex === 1) }">
                                 <div class="flex items-center">
                                     <span class="block font-medium truncate"> Today </span>
                                 </div>
