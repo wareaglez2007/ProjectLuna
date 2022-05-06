@@ -1,6 +1,6 @@
 <div>
     {{-- Project form goes here --}}
-    <form action="#" class="relative" wire:submit.prevent="save()" >
+    <form action="#" class="relative" wire:submit.prevent="save()">
         <div x-data="
         {
             project:$persist(@entangle('project.name')),
@@ -38,7 +38,7 @@
         </div>
 
         <div class="absolute bottom-0 inset-x-px">
-            <!-- Actions: These are just examples to demonstrate the concept, replace/wire these up however makes sense for your project. -->
+            {{-- Project Phase --}}
             <div class="flex justify-end px-2 py-2 space-x-2 flex-nowrap sm:px-3">
                 <div class="flex-shrink-0">
                     {{-- <label id="listbox-label" class="sr-only"> Assign </label> --}}
@@ -83,8 +83,7 @@
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                             aria-activedescendant="listbox-option-0" x-show="open" @click.outside="open = false"
-                            wire:model="project.phase"
-                            >
+                            wire:model="project.phase">
                             <template x-for="phaseitem in phases" :key="phaseitem.id">
 
                                 <li class="relative px-3 py-2 cursor-default select-none" id="listbox-option-0"
@@ -92,10 +91,9 @@
                                     @click="$dispatch('input', phaseitem.name), selectedphase=phaseitem.name, open=false"
                                     @mouseenter="phaseactiveIndex = phaseitem.name"
                                     @mouseleave="phaseactiveIndex = phaseactiveIndex"
-                                    :class="(project_phase != null ? (phaseitem.name === project_phase ? 'bg-gray-100' : 'bg-white') : (phaseactiveIndex === phaseitem.name) ? 'bg-gray-100' : 'bg-white')"
-                                    >
+                                    :class="(project_phase != null ? (phaseitem.name === project_phase ? 'bg-gray-100' : 'bg-white') : (phaseactiveIndex === phaseitem.name) ? 'bg-gray-100' : 'bg-white')">
                                     <div class="flex items-center">
-                                        <span class="block ml-3 font-medium truncate"  x-text="phaseitem.name"></span>
+                                        <span class="block ml-3 font-medium truncate" x-text="phaseitem.name"></span>
 
                                     </div>
                                 </li>
@@ -105,7 +103,8 @@
 
                     </div>
                 </div>
-
+                {{-- END of Project Phase --}}
+                {{-- Project Status --}}
                 <div class="flex-shrink-0">
                     <label id="listbox-label" class="sr-only"> Add a label </label>
                     <div class="relative" x-data="{ open: false, selectedIndex: 0, activeIndex: 0, selectphase:'' }">
@@ -156,7 +155,8 @@
                         </ul>
                     </div>
                 </div>
-
+                {{-- End of Project Status --}}
+                {{-- Project Assignment --}}
                 <div class="flex-shrink-0">
                     <label id="listbox-label" class="sr-only"> Add a due date </label>
                     <div class="relative" x-data="{ open: false, selectedIndex: 0, activeIndex: 0 }">
@@ -202,6 +202,7 @@
                         </ul>
                     </div>
                 </div>
+                  {{--END of Project Assignment --}}
             </div>
             <div class="flex items-center justify-between px-2 py-2 space-x-3 border-t border-gray-200 sm:px-3">
                 <div class="flex">
@@ -249,8 +250,9 @@
                      phaseactiveIndex: values.phaseactiveIndex,
                      init_class: this.init_class,
                      persist_class: this.persist_class,
+                     open: values.open ?? false,
                      init: function(){
-                         console.log(this.project_phase)
+
                     }
                 }
              }
