@@ -17,37 +17,20 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->longText('description')->nullable();
-            $table->set('phase', [
-                'Not Started',
-                'In Progress',
-                'On Hold',
-                'Pending Customer',
-                'Pending Supplier',
-                'Pending Other',
-                'Completed',
-                'Cancelled',
-                'Resolved',
-                'Delayed',
-                'On Time'
-            ]);
-            $table->set('priority', [
-                'Low',
-                'Medium',
-                'High'
-
-            ]);
+            $table->string('phase')->default('Not Started')->nullable();
+            $table->string('priority')->default('Low')->nullable();
             $table->integer('status')->default(0);
             $table->integer('assigned')->default(0);
             $table->timestamp('due_date')->nullable();
             $table->integer('has_documents')->default(0);
             $table->integer('has_images')->default(0);
             $table->string('assinged_to')->references('id')->on('users');
-            $table->string('reassigned_by')->references('id')->on('users');
+            $table->string('reassigned_by')->references('id')->on('users')->nullabel();
             $table->timestamp('assigned_date')->nullable();
             $table->timestamp('reassigned_date')->nullable();
             $table->string('created_by')->references('id')->on('users');
-            $table->string('modified_by')->references('id')->on('users');
-            $table->string('deleted_by')->references('id')->on('users');
+            $table->string('modified_by')->references('id')->on('users')->nullable();
+            $table->string('deleted_by')->references('id')->on('users')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

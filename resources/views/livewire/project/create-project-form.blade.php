@@ -1,30 +1,25 @@
 <div>
     {{-- Project form goes here --}}
-    <!--
-This example requires Tailwind CSS v2.0+
+    <form action="#" class="relative" wire:submit.prevent="save()" >
+        <div x-data="
+        {
+            project:$persist(@entangle('project.name')),
+            project_description:$persist(@entangle('project.description')),
 
-This example requires some changes to your config:
 
-```
-// tailwind.config.js
-module.exports = {
-// ...
-plugins: [
-// ...
-require('@tailwindcss/forms'),
-],
-}
-```
--->
-    <form action="#" class="relative">
-        <div
+        }
+        "
             class="overflow-hidden border border-gray-300 rounded-lg shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
             <label for="title" class="sr-only">Title</label>
-            <input type="text" name="title" id="title"
+
+            <input type="text" name="name" id="name" wire:model="project.name"
                 class="block w-full border-0 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"
-                placeholder="Title">
+                placeholder="Project Name (i.e. Project address)">
+
+
+
             <label for="description" class="sr-only">Description</label>
-            <textarea rows="2" name="description" id="description"
+            <textarea rows="2" name="description" id="description" wire:model="project.description"
                 class="block w-full py-0 placeholder-gray-500 border-0 resize-none focus:ring-0 sm:text-sm"
                 placeholder="Write a description..."></textarea>
 
@@ -46,91 +41,73 @@ require('@tailwindcss/forms'),
             <!-- Actions: These are just examples to demonstrate the concept, replace/wire these up however makes sense for your project. -->
             <div class="flex justify-end px-2 py-2 space-x-2 flex-nowrap sm:px-3">
                 <div class="flex-shrink-0">
-                    <label id="listbox-label" class="sr-only"> Assign </label>
-                    <div class="relative" x-data="{ open: false, selectedIndex: 0, activeIndex: 0 }">
+                    {{-- <label id="listbox-label" class="sr-only"> Assign </label> --}}
+                    <div class="relative" x-data="{ open: false, selectedIndex: 0, phaseactiveIndex: 1,
+                    phases:[
+                        {id:1,name:'Not Started'},
+                        {id:2,name:'In Progress'},
+                        {id:3,name:'On Hold'},
+                        {id:4,name:'Pending Customer'},
+                        {id:5,name:'Pending Supplier'},
+                        {id:6,name:'Pending Other'},
+                        {id:7,name: 'Completed'},
+                        {id:8,name:'Cancelled'},
+                        {id:9,name:'Resolved'},
+                        {id:10,name:'Delayed'},
+                        {id:11,name:'On Time'}],
+                        selectedphase: null,
+                        phase: '',
+                        project_phase:$persist(@entangle('project.phase'))
+                    }">
+
                         <button x-on:click="open = ! open" type="button"
                             class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
-                            aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
-                            <!--
-Placeholder icon, show/hide based on listbox state.
-
-Heroicon name: solid/user-circle
--->
-                            <svg class="flex-shrink-0 w-5 h-5 text-gray-300 sm:-ml-1" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                                    clip-rule="evenodd" />
+                            aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label" x-ref="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-5 h-5 text-gray-300 sm:-ml-1"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                             </svg>
 
-                            <!-- Selected user avatar, show/hide based on listbox state. -->
-                            <img src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt="" class="flex-shrink-0 w-5 h-5 rounded-full">
+                            <span class="hidden truncate sm:ml-2 sm:block"
+                                :class="{ '': selectedphase === null, 'text-gray-900': !(selectedphase === null) }"
+                                x-text="project_phase != null ? project_phase : (selectedphase === null ? 'Not Selected' : selectedphase) "></span>
 
-                            <!-- Selected: "text-gray-900" -->
-                            <span class="hidden truncate sm:ml-2 sm:block"> Assign </span>
                         </button>
 
-                        <!--
-Select popover, show/hide based on select state.
 
-Entering: ""
-From: ""
-To: ""
-Leaving: "transition ease-in duration-100"
-From: "opacity-100"
-To: "opacity-0"
--->
+
                         <ul x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
                             x-transition:leave-end="opacity-0"
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
-                            aria-activedescendant="listbox-option-0" x-show="open" @click.outside="open = false">
-                            <!--
-Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
+                            aria-activedescendant="listbox-option-0" x-show="open" @click.outside="open = false"
+                            wire:model="project.phase"
 
-Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
--->
-                            <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-0"
-                                role="option" @click="choose(0)" @mouseenter="activeIndex = 0"
-                                @mouseleave="activeIndex = null"
-                                :class="{ 'bg-gray-100': activeIndex === 0, 'bg-white': !(activeIndex === 0) }">
-                                <div class="flex items-center">
-                                    <!-- Heroicon name: solid/user-circle -->
-                                    <svg class="flex-shrink-0 w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd"
-                                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                    <span class="block ml-3 font-medium truncate"> Unassigned </span>
-                                </div>
-                            </li>
+                            >
+                            <template x-for="phaseitem in phases" :key="phaseitem.id">
+                                <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-0"
+                                    role="option" x-data
 
-                            <!--
-Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
+                                    @click="$dispatch('input', phaseitem.name), selectedphase=phaseitem.name, open=false"
+                                    @mouseenter="phaseactiveIndex = phaseitem.id"
+                                    @mouseleave="phaseactiveIndex = phaseactiveIndex"
+                                    :class="{ 'bg-gray-100': phaseactiveIndex === phaseitem.id, 'bg-white': !(phaseactiveIndex === phaseitem.id) }">
+                                    <div class="flex items-center">
+                                        <span class="block ml-3 font-medium truncate" x-text="phaseitem.name"></span>
 
-Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
--->
-                            <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-1"
-                                role="option" id="listbox-option-0" role="option" @click="choose(0)"
-                                @mouseenter="activeIndex = 1" @mouseleave="activeIndex = null"
-                                :class="{ 'bg-gray-100': activeIndex === 1, 'bg-white': !(activeIndex === 1) }">
-                                <div class="flex items-center">
-                                    <img src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                        alt="" class="flex-shrink-0 w-5 h-5 rounded-full">
-                                    <span class="block ml-3 font-medium truncate"> Wade Cooper </span>
-                                </div>
-                            </li>
+                                    </div>
+                                </li>
+                            </template>
 
-                            <!-- More items... -->
                         </ul>
+
                     </div>
                 </div>
 
                 <div class="flex-shrink-0">
                     <label id="listbox-label" class="sr-only"> Add a label </label>
-                    <div class="relative" x-data="{ open: false, selectedIndex: 0, activeIndex: 0 }">
+                    <div class="relative" x-data="{ open: false, selectedIndex: 0, activeIndex: 0, selectphase:'' }">
                         <button type="button" x-on:click="open = ! open"
                             class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
                             aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
@@ -203,11 +180,6 @@ Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
                         <button type="button" x-on:click="open = ! open"
                             class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
                             aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
-                            <!--
-Heroicon name: solid/calendar
-
-Selected: "text-gray-300", Default: "text-gray-500"
--->
                             <svg class="flex-shrink-0 w-5 h-5 text-gray-300 sm:-ml-1" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd"
@@ -217,27 +189,12 @@ Selected: "text-gray-300", Default: "text-gray-500"
                             <!-- Selected: "text-gray-900" -->
                             <span class="hidden truncate sm:ml-2 sm:block"> Due date </span>
                         </button>
-
-                        <!--
-Select popover, show/hide based on select state.
-
-Entering: ""
-From: ""
-To: ""
-Leaving: "transition ease-in duration-100"
-From: "opacity-100"
-To: "opacity-0"
--->
                         <ul x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
                             x-transition:leave-end="opacity-0"
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                             aria-activedescendant="listbox-option-0" x-show="open" @click.outside="open = false">
-                            <!--
-Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
--->
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-0"
                                 role="option" id="listbox-option-0" role="option" @click="choose(0)"
                                 @mouseenter="activeIndex = 0" @mouseleave="activeIndex = null"
@@ -282,10 +239,33 @@ Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
                 </div>
                 <div class="flex-shrink-0">
                     <button type="submit"
-                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Create</button>
+                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Create
+                    </button>
+
                 </div>
             </div>
         </div>
+
     </form>
+    {{-- <x-jet-action-message class="mr-3" on="saved">
+        {{ __('Saved.') }}
+    </x-jet-action-message> --}}
+    @push('scripts')
+    <script>
+        Livewire.on('saved', data => {
+       // alert('A post was added with the id of: ');
+        //console.log(data);
+        localStorage.clear();
+
+
+             });
+
+
+
+    </script>
+
+    @endpush
+
 
 </div>
