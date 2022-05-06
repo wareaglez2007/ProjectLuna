@@ -10,16 +10,17 @@ use Illuminate\Support\Facades\Auth;
 
 class CreateProjectForm extends Component
 {
-    // use SoftDeletes;
-    //use WithPagination;
+    //use SoftDeletes;
+    // use WithPagination;
 
     public $project_count;
+    public $project_phase = '';
     public Project $project;
 
     protected $rules = [
         'project.name' => 'required|string|min:6',
         'project.description' => 'required|string|max:500',
-        'project.phase' => 'required|string|max:100'
+        'project.phase' => 'required|string|max:100',
     ];
     public $selectedPhase;
     public function render()
@@ -39,21 +40,13 @@ class CreateProjectForm extends Component
         $this->project->assinged_to =  Auth::user()->id;
         $this->project->reassigned_by = Auth::user()->id;
         $this->project->save();
-
-
+        $this->project->name = null;
+        $this->project->description = null;
+        $this->project->phase = "Not Selected";
         $this->emit('saved');
-
         $this->emit('refresh-navigation-menu');
-        //return redirect()->route('project.show');
-    }
 
-    /**
-     * add function will add new project
-     */
-    // public function add()
-    // {
-    //     # code...
-    // }
+    }
 
     public function Test()
     {

@@ -42,7 +42,7 @@
             <div class="flex justify-end px-2 py-2 space-x-2 flex-nowrap sm:px-3">
                 <div class="flex-shrink-0">
                     {{-- <label id="listbox-label" class="sr-only"> Assign </label> --}}
-                    <div class="relative" x-data="{ open: false, selectedIndex: 0, phaseactiveIndex: 1,
+                    <div class="relative" x-data="select({ open: false, selectedIndex: 0, phaseactiveIndex: '',
                     phases:[
                         {id:1,name:'Not Started'},
                         {id:2,name:'In Progress'},
@@ -57,8 +57,10 @@
                         {id:11,name:'On Time'}],
                         selectedphase: null,
                         phase: '',
-                        project_phase:$persist(@entangle('project.phase'))
-                    }">
+                        project_phase:$persist(@entangle('project.phase')),
+                        init_class: 'relative px-3 py-2 bg-white cursor-default select-none',
+                        persist_class: 'relative px-3 py-2 bg-gray-100 cursor-default select-none'
+                    })" x-init="init()">
 
                         <button x-on:click="open = ! open" type="button"
                             class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
@@ -76,25 +78,24 @@
                         </button>
 
 
-
                         <ul x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
                             x-transition:leave-end="opacity-0"
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                             aria-activedescendant="listbox-option-0" x-show="open" @click.outside="open = false"
                             wire:model="project.phase"
-
                             >
                             <template x-for="phaseitem in phases" :key="phaseitem.id">
-                                <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-0"
-                                    role="option" x-data
 
+                                <li class="relative px-3 py-2 cursor-default select-none" id="listbox-option-0"
+                                    role="option" x-data
                                     @click="$dispatch('input', phaseitem.name), selectedphase=phaseitem.name, open=false"
-                                    @mouseenter="phaseactiveIndex = phaseitem.id"
+                                    @mouseenter="phaseactiveIndex = phaseitem.name"
                                     @mouseleave="phaseactiveIndex = phaseactiveIndex"
-                                    :class="{ 'bg-gray-100': phaseactiveIndex === phaseitem.id, 'bg-white': !(phaseactiveIndex === phaseitem.id) }">
+                                    :class="(project_phase != null ? (phaseitem.name === project_phase ? 'bg-gray-100' : 'bg-white') : (phaseactiveIndex === phaseitem.name) ? 'bg-gray-100' : 'bg-white')"
+                                    >
                                     <div class="flex items-center">
-                                        <span class="block ml-3 font-medium truncate" x-text="phaseitem.name"></span>
+                                        <span class="block ml-3 font-medium truncate"  x-text="phaseitem.name"></span>
 
                                     </div>
                                 </li>
@@ -111,11 +112,7 @@
                         <button type="button" x-on:click="open = ! open"
                             class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
                             aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
-                            <!--
-Heroicon name: solid/tag
 
-Selected: "text-gray-300", Default: "text-gray-500"
--->
                             <svg class="flex-shrink-0 w-5 h-5 text-gray-300 sm:-ml-1" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fill-rule="evenodd"
@@ -127,25 +124,14 @@ Selected: "text-gray-300", Default: "text-gray-500"
                         </button>
 
                         <!--
-Select popover, show/hide based on select state.
 
-Entering: ""
-From: ""
-To: ""
-Leaving: "transition ease-in duration-100"
-From: "opacity-100"
-To: "opacity-0"
--->
                         <ul x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
                             x-transition:leave-end="opacity-0"
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                             aria-activedescendant="listbox-option-0" x-show="open" @click.outside="open = false">
                             <!--
-Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
--->
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-0"
                                 role="option" id="listbox-option-0" role="option" @click="choose(0)"
                                 @mouseenter="activeIndex = 0" @mouseleave="activeIndex = null"
@@ -156,10 +142,7 @@ Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
                             </li>
 
                             <!--
-Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
--->
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-1"
                                 role="option" id="listbox-option-0" role="option" @click="choose(0)"
                                 @mouseenter="activeIndex = 1" @mouseleave="activeIndex = null"
@@ -205,10 +188,7 @@ Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
                             </li>
 
                             <!--
-Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
 
-Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
--->
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-1"
                                 role="option" id="listbox-option-0" role="option" @click="choose(0)"
                                 @mouseenter="activeIndex = 1" @mouseleave="activeIndex = null"
@@ -242,15 +222,15 @@ Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         Create
                     </button>
-
+                    <x-jet-action-message class="mr-3" on="saved">
+                        {{ __('Saved.') }}
+                    </x-jet-action-message>
                 </div>
             </div>
         </div>
 
     </form>
-    {{-- <x-jet-action-message class="mr-3" on="saved">
-        {{ __('Saved.') }}
-    </x-jet-action-message> --}}
+
     @push('scripts')
     <script>
         Livewire.on('saved', data => {
@@ -260,7 +240,20 @@ Highlighted: "bg-gray-100", Not Highlighted: "bg-white"
 
 
              });
+             function select(values){
 
+                 return{
+                     phases: values.phases,
+                     selectedphase: values.selectedphase ?? 'Not Selected',
+                     project_phase: values.project_phase,
+                     phaseactiveIndex: values.phaseactiveIndex,
+                     init_class: this.init_class,
+                     persist_class: this.persist_class,
+                     init: function(){
+                         console.log(this.project_phase)
+                    }
+                }
+             }
 
 
     </script>
