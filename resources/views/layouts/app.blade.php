@@ -13,7 +13,11 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-
+    <style>
+        [x-cloak] {
+            display: none;
+        }
+    </style>
     @livewireStyles
 
     <!-- Scripts -->
@@ -28,19 +32,20 @@
         {{-- @livewire('navigation-menu') --}}
         <!-- Page Heading -->
         @if (isset($header))
-            <header class="bg-white shadow">
-                <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
+        <header class="bg-white shadow">
+            <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+                {{ $header }}
+            </div>
+        </header>
         @endif
         <!-- Page Content -->
         <main class="flex-1">
             {{ $slot }}
 
         </main>
-        {{-- </div> --}}
-        {{-- </div> --}}
+        {{--
+    </div> --}}
+    {{-- </div> --}}
     </div>
 
     @stack('modals')

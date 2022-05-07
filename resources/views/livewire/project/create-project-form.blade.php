@@ -59,7 +59,8 @@
                         phase: '',
                         project_phase:$persist(@entangle('project.phase')),
                         init_class: 'relative px-3 py-2 bg-white cursor-default select-none',
-                        persist_class: 'relative px-3 py-2 bg-gray-100 cursor-default select-none'
+                        persist_class: 'relative px-3 py-2 bg-gray-100 cursor-default select-none',
+
                     })" x-init="init()">
 
                         <button x-on:click="open = ! open" type="button"
@@ -83,7 +84,7 @@
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                             aria-activedescendant="listbox-option-0" x-show="open" @click.outside="open = false"
-                            wire:model="project.phase">
+                            wire:model="project.phase" x-cloak>
                             <template x-for="phaseitem in phases" :key="phaseitem.id">
 
                                 <li class="relative px-3 py-2 cursor-default select-none" id="listbox-option-0"
@@ -108,7 +109,7 @@
                 <div class="flex-shrink-0">
                     <label id="listbox-label" class="sr-only"> Add a label </label>
                     <div class="relative" x-data="{ open: false, selectedIndex: 0, activeIndex: 0, selectphase:'' }">
-                        <button type="button" x-on:click="open = ! open"
+                        <button type="button" x-on:click="open = ! open" x-cloak
                             class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
                             aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
 
@@ -122,14 +123,13 @@
                             <span class="hidden truncate sm:ml-2 sm:block"> Label </span>
                         </button>
 
-                        <!--
 
                         <ul x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
                             x-transition:leave-end="opacity-0"
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
-                            aria-activedescendant="listbox-option-0" x-show="open" @click.outside="open = false">
-                            <!--
+                            aria-activedescendant="listbox-option-0" x-show="open" x-cloak @click.outside="open = false">
+
 
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-0"
                                 role="option" id="listbox-option-0" role="option" @click="choose(0)"
@@ -140,7 +140,7 @@
                                 </div>
                             </li>
 
-                            <!--
+
 
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-1"
                                 role="option" id="listbox-option-0" role="option" @click="choose(0)"
@@ -160,7 +160,7 @@
                 <div class="flex-shrink-0">
                     <label id="listbox-label" class="sr-only"> Add a due date </label>
                     <div class="relative" x-data="{ open: false, selectedIndex: 0, activeIndex: 0 }">
-                        <button type="button" x-on:click="open = ! open"
+                        <button type="button" x-on:click="open = ! open" x-cloak
                             class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
                             aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
                             <svg class="flex-shrink-0 w-5 h-5 text-gray-300 sm:-ml-1" xmlns="http://www.w3.org/2000/svg"
@@ -176,7 +176,7 @@
                             x-transition:leave-end="opacity-0"
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
-                            aria-activedescendant="listbox-option-0" x-show="open" @click.outside="open = false">
+                            aria-activedescendant="listbox-option-0" x-show="open" x-cloak @click.outside="open = false">
 
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-0"
                                 role="option" id="listbox-option-0" role="option" @click="choose(0)"
@@ -186,8 +186,6 @@
                                     <span class="block font-medium truncate"> No due date </span>
                                 </div>
                             </li>
-
-                            <!--
 
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-1"
                                 role="option" id="listbox-option-0" role="option" @click="choose(0)"
@@ -202,7 +200,7 @@
                         </ul>
                     </div>
                 </div>
-                  {{--END of Project Assignment --}}
+                {{--END of Project Assignment --}}
             </div>
             <div class="flex items-center justify-between px-2 py-2 space-x-3 border-t border-gray-200 sm:px-3">
                 <div class="flex">
@@ -218,7 +216,7 @@
                         <span class="text-sm italic text-gray-500 group-hover:text-gray-600">Attach a file</span>
                     </button>
                 </div>
-                <div class="flex-shrink-0">
+                {{-- <div class="flex-shrink-0">
                     <button type="submit"
                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         Create
@@ -226,7 +224,21 @@
                     <x-jet-action-message class="mr-3" on="saved">
                         {{ __('Saved.') }}
                     </x-jet-action-message>
+                </div> --}}
+                <div class="flex-shrink-0" >
+                    <div class="inline-flex items-center" x-cloak>
+
+                            <x-jet-action-message class="mr-3" on="saved">
+                                {{ __('Saved.') }}
+                            </x-jet-action-message>
+
+                        <button type="submit"
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            {{ __('Create') }}
+                        </button>
+                    </div>
                 </div>
+
             </div>
         </div>
 
@@ -236,7 +248,6 @@
     <script>
         Livewire.on('saved', data => {
        // alert('A post was added with the id of: ');
-        //console.log(data);
         localStorage.clear();
 
 
