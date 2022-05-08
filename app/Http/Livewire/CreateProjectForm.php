@@ -16,7 +16,7 @@ class CreateProjectForm extends Component
     public $project_count;
     public $project_phase = null;
     public Project $project;
-
+    public $date;
     protected $rules = [
         'project.name' => ['required','string','min:6'],
         'project.description' => 'required|string|max:500',
