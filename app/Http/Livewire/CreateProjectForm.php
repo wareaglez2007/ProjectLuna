@@ -14,14 +14,19 @@ class CreateProjectForm extends Component
     // use WithPagination;
 
     public $project_count;
-    public $project_phase = '';
+    public $project_phase = null;
     public Project $project;
 
     protected $rules = [
-        'project.name' => 'required|string|min:6',
+        'project.name' => ['required','string','min:6'],
         'project.description' => 'required|string|max:500',
         'project.phase' => 'required|string|max:100',
     ];
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
     public $selectedPhase;
     public function render()
     {
@@ -34,7 +39,8 @@ class CreateProjectForm extends Component
     }
     public function save()
     {
-        // $this->validate();
+        $validatedData = $this->validate();
+
 
         $this->project->created_by = Auth::user()->id;
         $this->project->assinged_to =  Auth::user()->id;
@@ -42,8 +48,8 @@ class CreateProjectForm extends Component
         $this->project->save();
         $this->project->name = null;
         $this->project->description = null;
-        $this->project->phase = "Not Selected";
-        $this->emit('saved');
+        $this->project->phase = null;
+        $this->emit('saved',['project_phase' => $this->project_phase]);
         $this->emit('refresh-navigation-menu');
 
     }

@@ -15,14 +15,16 @@
             <input type="text" name="name" id="name" wire:model="project.name"
                 class="block w-full border-0 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"
                 placeholder="Project Name (i.e. Project address)">
-
+                @error('project.name') <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span> @enderror
 
 
             <label for="description" class="sr-only">Description</label>
             <textarea rows="2" name="description" id="description" wire:model="project.description"
                 class="block w-full py-0 placeholder-gray-500 border-0 resize-none focus:ring-0 sm:text-sm"
                 placeholder="Write a description..."></textarea>
-
+                @error('project.description')
+                <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
+                @enderror
             <!-- Spacer element to match the height of the toolbar -->
             <div aria-hidden="true">
                 <div class="py-2">
@@ -44,6 +46,7 @@
                     {{-- <label id="listbox-label" class="sr-only"> Assign </label> --}}
                     <div class="relative" x-data="select({ open: false, selectedIndex: 0, phaseactiveIndex: '',
                     phases:[
+
                         {id:1,name:'Not Started'},
                         {id:2,name:'In Progress'},
                         {id:3,name:'On Hold'},
@@ -62,7 +65,9 @@
                         persist_class: 'relative px-3 py-2 bg-gray-100 cursor-default select-none',
 
                     })" x-init="init()">
-
+                    @error('project.phase')
+                    <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
+                    @enderror
                         <button x-on:click="open = ! open" type="button"
                             class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
                             aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label" x-ref="button">
@@ -74,7 +79,7 @@
 
                             <span class="hidden truncate sm:ml-2 sm:block"
                                 :class="{ '': selectedphase === null, 'text-gray-900': !(selectedphase === null) }"
-                                x-text="project_phase != null ? project_phase : (selectedphase === null ? 'Not Selected' : selectedphase) "></span>
+                                x-text="project_phase != null ? project_phase : (selectedphase === null ? 'Select Phase' : selectedphase) "></span>
 
                         </button>
 
@@ -89,12 +94,16 @@
 
                                 <li class="relative px-3 py-2 cursor-default select-none" id="listbox-option-0"
                                     role="option" x-data
-                                    @click="$dispatch('input', phaseitem.name), selectedphase=phaseitem.name, open=false"
+                                    @click="$dispatch('input', phaseitem.name), selectedphase='Select Phase', open=false"
                                     @mouseenter="phaseactiveIndex = phaseitem.name"
                                     @mouseleave="phaseactiveIndex = phaseactiveIndex"
                                     :class="(project_phase != null ? (phaseitem.name === project_phase ? 'bg-gray-100' : 'bg-white') : (phaseactiveIndex === phaseitem.name) ? 'bg-gray-100' : 'bg-white')">
+
                                     <div class="flex items-center">
-                                        <span class="block ml-3 font-medium truncate" x-text="phaseitem.name"></span>
+
+                                        <span class="block ml-3 font-medium truncate" x-text="phaseitem.name">
+
+                                        </span>
 
                                     </div>
                                 </li>
@@ -228,9 +237,9 @@
                 <div class="flex-shrink-0" >
                     <div class="inline-flex items-center" x-cloak>
 
-                            <x-jet-action-message class="mr-3" on="saved">
-                                {{ __('Saved.') }}
-                            </x-jet-action-message>
+                        <x-jet-action-message class="mr-3" on="saved">
+                            {{ __('Saved.') }}
+                        </x-jet-action-message>
 
                         <button type="submit"
                             class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -256,14 +265,14 @@
 
                  return{
                      phases: values.phases,
-                     selectedphase: values.selectedphase ?? 'Not Selected',
+                     selectedphase: values.selectedphase ?? null,
                      project_phase: values.project_phase,
                      phaseactiveIndex: values.phaseactiveIndex,
                      init_class: this.init_class,
                      persist_class: this.persist_class,
                      open: values.open ?? false,
                      init: function(){
-
+                      //  $set('project_phase', 'Not Selected')
                     }
                 }
              }
