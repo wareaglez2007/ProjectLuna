@@ -15,16 +15,17 @@
             <input type="text" name="name" id="name" wire:model="project.name"
                 class="block w-full border-0 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"
                 placeholder="Project Name (i.e. Project address)">
-                @error('project.name') <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span> @enderror
+            @error('project.name') <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
+            @enderror
 
 
             <label for="description" class="sr-only">Description</label>
             <textarea rows="2" name="description" id="description" wire:model="project.description"
                 class="block w-full py-0 placeholder-gray-500 border-0 resize-none focus:ring-0 sm:text-sm"
                 placeholder="Write a description..."></textarea>
-                @error('project.description')
-                <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
-                @enderror
+            @error('project.description')
+            <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
+            @enderror
             <!-- Spacer element to match the height of the toolbar -->
             <div aria-hidden="true">
                 <div class="py-2">
@@ -65,9 +66,9 @@
                         persist_class: 'relative px-3 py-2 bg-gray-100 cursor-default select-none',
 
                     })" x-init="init()">
-                    @error('project.phase')
-                    <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
-                    @enderror
+                        @error('project.phase')
+                        <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
+                        @enderror
                         <button x-on:click="open = ! open" type="button"
                             class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
                             aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label" x-ref="button">
@@ -137,7 +138,8 @@
                             x-transition:leave-end="opacity-0"
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
-                            aria-activedescendant="listbox-option-0" x-show="open" x-cloak @click.outside="open = false">
+                            aria-activedescendant="listbox-option-0" x-show="open" x-cloak
+                            @click.outside="open = false">
 
 
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-0"
@@ -185,7 +187,8 @@
                             x-transition:leave-end="opacity-0"
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
-                            aria-activedescendant="listbox-option-0" x-show="open" x-cloak @click.outside="open = false">
+                            aria-activedescendant="listbox-option-0" x-show="open" x-cloak
+                            @click.outside="open = false">
 
                             <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-0"
                                 role="option" id="listbox-option-0" role="option" @click="choose(0)"
@@ -211,7 +214,8 @@
                 </div>
                 {{--END of Project Assignment --}}
                 <div class="flex-shrink-0">
-                    <x-pick-a-date wire:model="date" id="date" class="block mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+                    <x-pick-a-date wire:model="date" id="date"
+                        class="block mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
 
                 </div>
             </div>
@@ -238,20 +242,34 @@
                         {{ __('Saved.') }}
                     </x-jet-action-message>
                 </div> --}}
-                <div class="flex-shrink-0" >
-                    <div class="inline-flex items-center" x-cloak>
+                <div class="flex justify-end px-2 py-2 space-x-2 flex-nowrap sm:px-3">
+                    <div class="flex-shrink-0">
+                        <div class="inline-flex items-center" x-cloak>
 
-                        <x-jet-action-message class="mr-3" on="saved">
-                            {{ __('Saved.') }}
-                        </x-jet-action-message>
+                            <x-jet-action-message class="mr-3" on="reset">
+                                {{ __('Done!') }}
+                            </x-jet-action-message>
 
-                        <button type="submit"
-                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            {{ __('Create') }}
-                        </button>
+                            <button type="submit"
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 transition bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 active:text-gray-800 active:bg-gray-50 disabled:opacity-25">
+                                {{ __('Reset') }}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div class="inline-flex items-center" x-cloak>
+
+                            <x-jet-action-message class="mr-3" on="saved">
+                                {{ __('Saved.') }}
+                            </x-jet-action-message>
+
+                            <button type="submit"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                {{ __('Create') }}
+                            </button>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </form>
