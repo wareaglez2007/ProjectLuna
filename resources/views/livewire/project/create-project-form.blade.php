@@ -61,9 +61,7 @@
                         {id:11,name:'On Time'}],
                         selectedphase: null,
                         phase: '',
-                        project_phase:$persist(@entangle('project.phase')),
-                        init_class: 'relative px-3 py-2 bg-white cursor-default select-none',
-                        persist_class: 'relative px-3 py-2 bg-gray-100 cursor-default select-none',
+                        project_phase:$persist(@entangle('project.phase'))
 
                     })" x-init="init()">
                         @error('project.phase')
@@ -116,108 +114,13 @@
                 </div>
                 {{-- END of Project Phase --}}
                 {{-- Project Status --}}
-                <div class="flex-shrink-0">
-                    <label id="listbox-label" class="sr-only"> Add a label </label>
-                    <div class="relative" x-data="{ open: false, selectedIndex: 0, activeIndex: 0, selectphase:'' }">
-                        <button type="button" x-on:click="open = ! open" x-cloak
-                            class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
-                            aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
-
-                            <svg class="flex-shrink-0 w-5 h-5 text-gray-300 sm:-ml-1" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <!-- Selected: "text-gray-900" -->
-                            <span class="hidden truncate sm:ml-2 sm:block"> Label </span>
-                        </button>
-
-
-                        <ul x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
-                            x-transition:leave-end="opacity-0"
-                            class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-                            tabindex="-1" role="listbox" aria-labelledby="listbox-label"
-                            aria-activedescendant="listbox-option-0" x-show="open" x-cloak
-                            @click.outside="open = false">
-
-
-                            <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-0"
-                                role="option" id="listbox-option-0" role="option" @click="choose(0)"
-                                @mouseenter="activeIndex = 0" @mouseleave="activeIndex = null"
-                                :class="{ 'bg-gray-100': activeIndex === 0, 'bg-white': !(activeIndex === 0) }">
-                                <div class="flex items-center">
-                                    <span class="block font-medium truncate"> Unlabelled </span>
-                                </div>
-                            </li>
-
-
-
-                            <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-1"
-                                role="option" id="listbox-option-0" role="option" @click="choose(0)"
-                                @mouseenter="activeIndex = 1" @mouseleave="activeIndex = null"
-                                :class="{ 'bg-gray-100': activeIndex === 1, 'bg-white': !(activeIndex === 1) }">
-                                <div class="flex items-center">
-                                    <span class="block font-medium truncate"> Engineering </span>
-                                </div>
-                            </li>
-
-                            <!-- More items... -->
-                        </ul>
-                    </div>
-                </div>
+                <x-pick-labes />
                 {{-- End of Project Status --}}
                 {{-- Project Assignment --}}
-                <div class="flex-shrink-0">
-                    <label id="listbox-label" class="sr-only"> Add a due date </label>
-                    <div class="relative" x-data="{ open: false, selectedIndex: 0, activeIndex: 0 }">
-                        <button type="button" x-on:click="open = ! open" x-cloak
-                            class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
-                            aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
-                            <svg class="flex-shrink-0 w-5 h-5 text-gray-300 sm:-ml-1" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            <!-- Selected: "text-gray-900" -->
-                            <span class="hidden truncate sm:ml-2 sm:block"> Due date </span>
-                        </button>
-                        <ul x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
-                            x-transition:leave-end="opacity-0"
-                            class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-                            tabindex="-1" role="listbox" aria-labelledby="listbox-label"
-                            aria-activedescendant="listbox-option-0" x-show="open" x-cloak
-                            @click.outside="open = false">
+                <x-pick-a-date-alt-drop-down wire:model="date" id="datepicker" />
 
-                            <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-0"
-                                role="option" id="listbox-option-0" role="option" @click="choose(0)"
-                                @mouseenter="activeIndex = 0" @mouseleave="activeIndex = null"
-                                :class="{ 'bg-gray-100': activeIndex === 0, 'bg-white': !(activeIndex === 0) }">
-                                <div class="flex items-center">
-                                    <span class="block font-medium truncate"> No due date </span>
-                                </div>
-                            </li>
-
-                            <li class="relative px-3 py-2 bg-white cursor-default select-none" id="listbox-option-1"
-                                role="option" id="listbox-option-0" role="option" @click="choose(0)"
-                                @mouseenter="activeIndex = 1" @mouseleave="activeIndex = null"
-                                :class="{ 'bg-gray-100': activeIndex === 1, 'bg-white': !(activeIndex === 1) }">
-                                <div class="flex items-center">
-                                    <span class="block font-medium truncate"> Today </span>
-                                </div>
-                            </li>
-
-                            <!-- More items... -->
-                        </ul>
-                    </div>
-                </div>
                 {{--END of Project Assignment --}}
-                <div class="flex-shrink-0">
-                    <x-pick-a-date wire:model="date" id="date"
-                        class="block mb-4 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
 
-                </div>
             </div>
             <div class="flex items-center justify-between px-2 py-2 space-x-3 border-t border-gray-200 sm:px-3">
                 <div class="flex">
@@ -251,7 +154,7 @@
                             </x-jet-action-message>
 
                             <button type="submit"
-                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 transition bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 active:text-gray-800 active:bg-gray-50 disabled:opacity-25">
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 transition bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 active:text-gray-800 active:bg-gray-50 disabled:opacity-25">
                                 {{ __('Reset') }}
                             </button>
                         </div>
@@ -272,18 +175,15 @@
                 </div>
             </div>
         </div>
+
     </form>
+
 
     @push('scripts')
     <script>
         Livewire.on('saved', data => {
-       // alert('A post was added with the id of: ');
-        localStorage.clear();
-
-
-             });
-             function select(values){
-
+        localStorage.clear(); });
+        function select(values){
                  return{
                      phases: values.phases,
                      selectedphase: values.selectedphase ?? null,
@@ -296,7 +196,33 @@
                       //  $set('project_phase', 'Not Selected')
                     }
                 }
+             };
+             //Due date functions
+        function selectDueDate(values){
+            return{
+            open: values.open ?? false,
+            project_date:values.project_date,
+            selecteddate:values.selectDueDate,
+            dateactiveIndex: values.dateactiveIndex,
+            date: values.date,
+            init: function(){
              }
+            }
+        };
+        //Label functions
+        function selectLabel(values){
+            return{
+            open: values.open ?? false,
+            selectIndex: values.selectIndex,
+            activeIndex: values.activeIndex,
+            labels: values.labels,
+            p_label:values.p_label,
+            selectlabel:values.selectlabel,
+            init: function(){
+            }
+         }
+        };
+
 
 
     </script>

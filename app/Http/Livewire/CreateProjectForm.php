@@ -17,10 +17,13 @@ class CreateProjectForm extends Component
     public $project_phase = null;
     public Project $project;
     public $date;
+    public $label;
     protected $rules = [
         'project.name' => ['required','string','min:6'],
         'project.description' => 'required|string|max:500',
         'project.phase' => 'required|string|max:100',
+        'date' => 'required|date',
+        'label' => 'required|string'
     ];
 
     public function updated($propertyName)
@@ -49,6 +52,8 @@ class CreateProjectForm extends Component
         $this->project->name = null;
         $this->project->description = null;
         $this->project->phase = null;
+        $this->date = null;
+        $this->label = null;
         $this->emit('saved',['project_phase' => $this->project_phase]);
         $this->emit('refresh-navigation-menu');
 
