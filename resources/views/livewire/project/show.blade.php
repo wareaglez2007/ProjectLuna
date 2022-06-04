@@ -6,7 +6,7 @@
     </x-slot>
 
     <div>
-        <div class="py-10 mx-auto bg-white max-w-7xl sm:px-6 lg:px-8">
+        <div class="py-10 mx-auto mt-10 bg-white max-w-7xl sm:px-6 lg:px-8">
 
             {{-- Create new Project Section --}}
             @livewire('project.create-project-form')

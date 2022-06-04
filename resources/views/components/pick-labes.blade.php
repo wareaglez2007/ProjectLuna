@@ -13,6 +13,9 @@
             ],
             p_label:$persist(@entangle('label')),
     })" x-init="init()">
+    @error('label')
+    <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
+    @enderror
             <button type="button" x-on:click="open = ! open" x-cloak
                 class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
                 aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">

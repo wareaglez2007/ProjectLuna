@@ -11,13 +11,14 @@ use Illuminate\Support\Facades\Auth;
 class CreateProjectForm extends Component
 {
     //use SoftDeletes;
-    // use WithPagination;
+    //use WithPagination;
 
     public $project_count;
     public $project_phase = null;
     public Project $project;
     public $date;
     public $label;
+    protected $validatedData;
     protected $rules = [
         'project.name' => ['required','string','min:6'],
         'project.description' => 'required|string|max:500',
@@ -42,9 +43,7 @@ class CreateProjectForm extends Component
     }
     public function save()
     {
-        $validatedData = $this->validate();
-
-
+        $this->validatedData = $this->validate();
         $this->project->created_by = Auth::user()->id;
         $this->project->assinged_to =  Auth::user()->id;
         $this->project->reassigned_by = Auth::user()->id;
