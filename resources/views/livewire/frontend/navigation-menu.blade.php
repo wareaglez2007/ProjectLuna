@@ -487,7 +487,6 @@
 
     </div>
     <!-- END of Mobile menu -->
-
     <header class="relative z-10 bg-white">
         <p
             class="flex items-center justify-center h-10 px-4 text-sm font-medium text-white bg-indigo-600 sm:px-6 lg:px-8">

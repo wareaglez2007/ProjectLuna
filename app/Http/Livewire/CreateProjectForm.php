@@ -18,6 +18,7 @@ class CreateProjectForm extends Component
     public Project $project;
     public $date;
     public $label;
+    public $list_projects;
     protected $validatedData;
     protected $rules = [
         'project.name' => ['required','string','min:6'],
@@ -40,6 +41,7 @@ class CreateProjectForm extends Component
     public function mount()
     {
         $this->project = new Project();
+        $this->list_projects = $this->AllProjects();
     }
     public function save()
     {
@@ -61,5 +63,9 @@ class CreateProjectForm extends Component
     public function Test()
     {
         //return $this->project = $project;
+    }
+
+    public function AllProjects(){
+        return $this->project->get();
     }
 }

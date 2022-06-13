@@ -50,6 +50,7 @@ class ProjectController extends Controller
         return view('livewire.project.show',[
         'request' => $request,
         'user' => $request->user(),
+        'list_projects' => $project->get()
         ]);
     }
 

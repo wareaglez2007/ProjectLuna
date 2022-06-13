@@ -16,7 +16,10 @@
             <div class="mt-10 sm:mt-0">
                 @livewire('project.update-project-form')
             </div>
-
+            @foreach ($list_projects as $project )
+                {{$project->name}}
+            @endforeach
+            <x-horizontal-link-card/>
             <x-jet-section-border />
 
         </div>
