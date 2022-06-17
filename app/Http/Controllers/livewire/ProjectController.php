@@ -5,9 +5,10 @@ namespace App\Http\Controllers\livewire;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
-
+use Livewire\WithPagination;
 class ProjectController extends Controller
 {
+    use WithPagination;
     /**
      * Display a listing of the resource.
      *
@@ -48,9 +49,8 @@ class ProjectController extends Controller
     public function show(Project $project, Request $request)
     {
         return view('livewire.project.show',[
-        'request' => $request,
-        'user' => $request->user(),
-        'list_projects' => $project->get()
+
+        'projects' => Project::paginate(4)
         ]);
     }
 
