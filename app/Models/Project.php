@@ -36,7 +36,15 @@ class Project extends Model
 
     ];
 
-    public function getall(){
+    public function getall()
+    {
         return $this->all();
+    }
+    /**
+     * Get the user that owns the phone.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

@@ -3,7 +3,10 @@
 namespace App\Http\Livewire;
 use Livewire\WithPagination;
 use App\Models\Project;
+use App\Models\User;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
+
 
 class UpdateProjectForm extends Component
 {
@@ -23,8 +26,18 @@ class UpdateProjectForm extends Component
         /**Refresh */
     }
 
-    public function render()
+    public function render(Project $project)
     {
-        return view('livewire.project.update-project-form', ['projects' => Project::latest()->paginate(8)]);
+        $user = $this->getUserProperty();
+        return view('livewire.project.update-project-form', ['projects' => Project::whereBelongsTo($user)->latest()->paginate(3)]);
+    }
+       /**
+     * Get the current user of the application.
+     *
+     * @return mixed
+     */
+    public function getUserProperty()
+    {
+        return Auth::user();
     }
 }

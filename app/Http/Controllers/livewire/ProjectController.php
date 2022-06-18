@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
+
+
 class ProjectController extends Controller
 {
     use WithPagination;
@@ -48,9 +51,10 @@ class ProjectController extends Controller
      */
     public function show(Project $project, Request $request)
     {
-        return view('livewire.project.show',[
+        $user = $this->getUserProperty();
+        return view('livewire.project.show', [
 
-        'projects' => Project::paginate(8)
+            'projects' => Project::whereBelongsTo($user)->latest()->paginate(3)
         ]);
     }
 
@@ -86,5 +90,14 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+    /**
+     * Get the current user of the application.
+     *
+     * @return mixed
+     */
+    public function getUserProperty()
+    {
+        return Auth::user();
     }
 }
