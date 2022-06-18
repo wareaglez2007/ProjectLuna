@@ -22,12 +22,14 @@ class CreateProjectForm extends Component
     /** Protected Vars */
     protected $validatedData;
     protected $rules = [
-        'project.name' => ['required','string','min:6'],
+        'project.name' => ['required', 'string', 'min:6'],
         'project.description' => 'required|string|max:500',
         'project.phase' => 'required|string|max:100',
         'date' => 'required|date',
         'label' => 'required|string'
     ];
+    protected $listeners = ['reset-form' => 'resetValues'];
+
 
     public function updated($propertyName)
     {
@@ -54,19 +56,26 @@ class CreateProjectForm extends Component
         $this->project->reassigned_by = Auth::user()->id;
         $this->project->save();
         /** Reset vars for save */
-        $this->project->name = null;
-        $this->project->description = null;
-        $this->project->phase = null;
-        $this->date = null;
-        $this->label = null;
+        $this->reset(['project', 'date', 'label']);
         $this->emit('saved');
         /** POST SAVE */
         /** Reset Values for the next submissions */
         $this->project = new Project();
         $this->list_projects = $this->project->getall();
         $this->emit('refreshComponent', ['projects' => $this->list_projects]);
-
-
     }
 
+    public function resetValues()
+    {
+
+        if ($this->project->name != null) {
+            $this->project->name = null;
+            $this->project->description = null;
+            $this->date = null;
+            $this->project->phase = null;
+            $this->label = null;
+        } else {
+            //do nothing
+        }
+    }
 }

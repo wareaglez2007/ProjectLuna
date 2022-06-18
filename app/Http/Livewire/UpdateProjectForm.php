@@ -16,11 +16,6 @@ class UpdateProjectForm extends Component
      * Due date
      */
     use WithPagination;
-    public $p;
-    public function __construct()
-    {
-        $this->p = new Project();
-    }
 
     protected $listeners = ['refreshComponent' => 'refreshComponent'];
     public function refreshComponent()
@@ -30,6 +25,6 @@ class UpdateProjectForm extends Component
 
     public function render()
     {
-        return view('livewire.project.update-project-form', ['projects' => Project::latest()->paginate(4)]);
+        return view('livewire.project.update-project-form', ['projects' => Project::latest()->paginate(8)]);
     }
 }

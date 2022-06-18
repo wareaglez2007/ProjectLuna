@@ -50,7 +50,7 @@ class ProjectController extends Controller
     {
         return view('livewire.project.show',[
 
-        'projects' => Project::paginate(4)
+        'projects' => Project::paginate(8)
         ]);
     }
 
