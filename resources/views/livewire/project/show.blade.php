@@ -9,13 +9,14 @@
     <div class="py-10 mx-auto mt-10 bg-white max-w-7xl sm:px-6 lg:px-8">
         <div class="mt-10 sm:mt-0">
             {{-- Create new Project Section --}}
-            @livewire('project.create-project-form')
+            {{-- @dump($temp_data) --}}
+            @livewire('project.create-project-form', ['user' => $user, 'temp_data' => $temp_data])
         </div>
         <x-jet-section-border />
 
         {{-- Show list of projects section --}}
         <div class="mt-10 sm:mt-0">
-            @livewire('project.update-project-form',['projects' => $projects])
+            @livewire('project.update-project-form',['projects' => $projects, 'user' => $user])
         </div>
         <x-jet-section-border />
 

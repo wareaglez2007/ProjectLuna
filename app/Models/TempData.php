@@ -5,16 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class TempData extends Model
 {
     use HasFactory;
-
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
     protected $fillable = [
         'name',
         'description',
@@ -22,7 +15,7 @@ class Project extends Model
         'priority',
         'status',
         'assigned',
-        'assinged_to',
+        'user_id',
         'reassigned_by',
         'assigned_date',
         'reassigned_date',
@@ -36,15 +29,11 @@ class Project extends Model
 
     ];
 
-    public function getall()
-    {
-        return $this->all();
-    }
     /**
      * Get the user that owns the phone.
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class);
     }
 }

@@ -11,7 +11,7 @@
                 {id:5, name: 'Other'},
                 {id:6, name: 'Development'},
             ],
-            p_label:$persist(@entangle('label')),
+            p_label:@entangle('temp_data.priority'),
     })" x-init="init()">
     @error('label')
     <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
@@ -37,7 +37,8 @@
                 class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                 tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-0"
                 x-show="open" x-cloak @click.outside="open = false"
-                wire:model="label"
+                wire:model="temp_data.priority"
+                wire:click="savetempPriority()"
                 >
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\livewire;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\TempData;
 use Illuminate\Http\Request;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
@@ -49,12 +50,25 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project, Request $request)
+    public function show(Project $project, Request $request, TempData $tempData)
     {
+
+        $temp = $tempData->where('user_id', Auth::user()->id)->first();
+       // dd($request);
+        if ($temp ==  null) {
+            // $tempData->name = "";
+            // $tempData->description = "";
+            // $tempData->phase = "Not Started";
+            // $tempData->due_date = date('Y-m-d H:i:s');
+            // $tempData->priority = "Unlabled";
+            $temp = $tempData;
+        }
         $user = $this->getUserProperty();
         return view('livewire.project.show', [
 
-            'projects' => Project::whereBelongsTo($user)->latest()->paginate(3)
+            'projects' => Project::whereBelongsTo($user)->latest()->paginate(6),
+            'user' => $request->user()->id,
+            'temp_data' => $temp
         ]);
     }
 

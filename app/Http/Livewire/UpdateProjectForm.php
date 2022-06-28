@@ -29,7 +29,11 @@ class UpdateProjectForm extends Component
     public function render(Project $project)
     {
         $user = $this->getUserProperty();
-        return view('livewire.project.update-project-form', ['projects' => Project::whereBelongsTo($user)->latest()->paginate(3)]);
+        return view('livewire.project.update-project-form', [
+            'projects' => Project::whereBelongsTo($user)->latest()->paginate(6),
+            'user' => $user
+
+        ]);
     }
        /**
      * Get the current user of the application.

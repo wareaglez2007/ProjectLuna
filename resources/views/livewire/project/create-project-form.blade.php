@@ -1,29 +1,33 @@
 <div>
+    {{-- @dump($user) --}}
     {{-- Project form goes here --}}
     <form action="#" class="relative" wire:submit.prevent="save()">
         <div x-data="
-        {
-            project:$persist(@entangle('project.name')),
+
+        MainForm({
+
+            {{-- project:@entangle('project.name'),
             project_description:$persist(@entangle('project.description')),
+            user_storage:$persist({{$user}}),
+            temp_data:@entangle('project.name') --}}
 
-
-        }
-        "
+        })
+        " x-init="init()"
             class="overflow-hidden border border-gray-300 rounded-lg shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
             <label for="title" class="sr-only">Title</label>
-
-            <input type="text" name="name" id="name" wire:model="project.name"
+            <input type="hidden" name="user" wire:model="user" />
+            <input type="text" name="name" id="name" wire:model="temp_data.name"
                 class="block w-full border-0 pt-2.5 text-lg font-medium placeholder-gray-500 focus:ring-0"
-                placeholder="Project Name (i.e. Project address)">
-            @error('project.name') <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
+                placeholder="Project Name (i.e. Project address)" wire:keyup='savetemp()'>
+            @error('temp_data.name') <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
             @enderror
 
 
             <label for="description" class="sr-only">Description</label>
-            <textarea rows="2" name="description" id="description" wire:model="project.description"
+            <textarea rows="2" name="description" id="description" wire:model="temp_data.description"
                 class="block w-full py-0 placeholder-gray-500 border-0 resize-none focus:ring-0 sm:text-sm"
-                placeholder="Write a description..."></textarea>
-            @error('project.description')
+                placeholder="Write a description..." wire:keyup='savetemp()'></textarea>
+            @error('temp_data.description')
             <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
             @enderror
             <!-- Spacer element to match the height of the toolbar -->
@@ -61,10 +65,11 @@
                         {id:11,name:'On Time'}],
                         selectedphase: null,
                         phase: '',
-                        project_phase:$persist(@entangle('project.phase'))
+                        project_phase:@entangle('temp_data.phase')
+
 
                     })" x-init="init()">
-                        @error('project.phase')
+                        @error('temp_data.phase')
                         <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
                         @enderror
                         <button x-on:click="open = ! open" type="button"
@@ -88,7 +93,9 @@
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                             aria-activedescendant="listbox-option-0" x-show="open" @click.outside="open = false"
-                            wire:model="project.phase" x-cloak>
+                            wire:model="temp_data.phase"
+                            wire:click="savetempPhase()"
+                            x-cloak>
                             <template x-for="phaseitem in phases" :key="phaseitem.id">
 
                                 <li class="relative px-3 py-2 cursor-default select-none" id="listbox-option-0"
@@ -96,6 +103,7 @@
                                     @click="$dispatch('input', phaseitem.name), selectedphase='Select Phase', open=false"
                                     @mouseenter="phaseactiveIndex = phaseitem.name"
                                     @mouseleave="phaseactiveIndex = phaseactiveIndex"
+
                                     :class="(project_phase != null ? (phaseitem.name === project_phase ? 'bg-gray-100' : 'bg-white') : (phaseactiveIndex === phaseitem.name) ? 'bg-gray-100' : 'bg-white')">
 
                                     <div class="flex items-center">
@@ -117,7 +125,7 @@
                 <x-pick-labes />
                 {{-- End of Project Status --}}
                 {{-- Project Assignment --}}
-                <x-pick-a-date-alt-drop-down wire:model="date" id="datepicker" />
+                <x-pick-a-date-alt-drop-down  wire:model='temp_data.due_date' />
 
                 {{--END of Project Assignment --}}
 
@@ -153,9 +161,7 @@
                                 {{ __('Done!') }}
                             </x-jet-action-message>
 
-                            <button
-
-                            wire:click.prevent="$emitSelf('reset-form')"
+                            <button wire:click.prevent="$emitSelf('reset-form')"
                                 class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 transition bg-white border border-gray-300 rounded-md shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring focus:ring-blue-200 active:text-gray-800 active:bg-gray-50 disabled:opacity-25">
                                 {{ __('Reset') }}
                             </button>
@@ -185,21 +191,50 @@
     @push('scripts')
     <script>
         Livewire.on('saved', data => {
+            console.log(this.project);
         localStorage.clear();
     });
         Livewire.on('reset-form', local_storage => {
+
         localStorage.clear();
     });
+    Livewire.on('savetempPhase', project_phase => {
+        console.log(project_phase);
+    });
+    Livewire.on('savetempdudate', due_date => {
+        console.log(due_date);
+    });
+    </script>
+    @endpush
+    <script>
+        function MainForm(vals){
+        return{
+            project: vals.project,
+            project_description: vals.project_description,
+            user_storage:vals.user_storage,
+            temp_data:vals.temp_data,
+            init: function(){
+                if(this.user_storage === {{$user}}){
+                   // localStorage.setItem('_x_user_storage', {{$user}});
+                }else{
+                    localStorage.clear();
+                   // localStorage.setItem('_x_user_storage', {{$user}});
+
+                }
+}
+        }
+    }
         function select(values){
                  return{
                      phases: values.phases,
                      selectedphase: values.selectedphase ?? null,
-                     project_phase: values.project_phase,
+                     project_phase: values.project_phase ?? "Select Phase",
                      phaseactiveIndex: values.phaseactiveIndex,
                      init_class: this.init_class,
                      persist_class: this.persist_class,
                      open: values.open ?? false,
                      init: function(){
+
                       //  $set('project_phase', 'Not Selected')
                     }
                 }
@@ -207,12 +242,12 @@
              //Due date functions
         function selectDueDate(values){
             return{
-            open: values.open ?? false,
-            project_date:values.project_date,
-            selecteddate:values.selectDueDate,
-            dateactiveIndex: values.dateactiveIndex,
-            date: values.date,
+            due_date: values.due_date ?? 'select Due Date',
+            selecteddate:values.selecteddate,
+            open:values.open,
+            opencal:values.opencal,
             init: function(){
+
              }
             }
         };
@@ -234,7 +269,7 @@
 
     </script>
 
-    @endpush
+
 
 
 </div>
