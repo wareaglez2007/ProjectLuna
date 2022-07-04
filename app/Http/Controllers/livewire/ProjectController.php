@@ -54,13 +54,8 @@ class ProjectController extends Controller
     {
 
         $temp = $tempData->where('user_id', Auth::user()->id)->first();
-       // dd($request);
+
         if ($temp ==  null) {
-            // $tempData->name = "";
-            // $tempData->description = "";
-            // $tempData->phase = "Not Started";
-            // $tempData->due_date = date('Y-m-d H:i:s');
-            // $tempData->priority = "Unlabled";
             $temp = $tempData;
         }
         $user = $this->getUserProperty();
@@ -68,7 +63,8 @@ class ProjectController extends Controller
 
             'projects' => Project::whereBelongsTo($user)->latest()->paginate(6),
             'user' => $request->user()->id,
-            'temp_data' => $temp
+            'temp_data' => $temp,
+            'project' => ''
         ]);
     }
 

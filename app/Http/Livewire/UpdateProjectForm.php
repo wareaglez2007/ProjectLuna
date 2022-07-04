@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire;
+
 use Livewire\WithPagination;
 use App\Models\Project;
 use App\Models\User;
@@ -20,22 +21,72 @@ class UpdateProjectForm extends Component
      */
     use WithPagination;
 
+    /**
+     * Public properties
+     */
+    public $project; //Use this for updating values
+    public $p_id; // use this to get the ID
     protected $listeners = ['refreshComponent' => 'refreshComponent'];
+
+    /** Protected Vars */
+    protected $validatedData;
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    protected $rules = [
+
+        'project.user_id' => 'required',
+        'project.name' => 'required|min:2',
+        'project.description' => 'required|min:2',
+        'project.phase' =>  'required',
+        'project.due_date' =>  'required',
+        'project.priority' =>  'required',
+
+    ];
+
     public function refreshComponent()
     {
         /**Refresh */
     }
+    /**
+     * Livewire default function call
+     */
+    public function updated($propertyName, $value)
+    {
 
-    public function render(Project $project)
+        $this->validateOnly($propertyName);
+    }
+    /**
+     * Mount
+     *
+     * @param Project $project
+     * @return void
+     */
+    public function mount($id){
+        $this->project = new Project();
+        $this->project->id = $id;
+    }
+    /**
+     * Render
+     *
+     * @param Project $project
+     * @return void
+     */
+    public function render()
     {
         $user = $this->getUserProperty();
         return view('livewire.project.update-project-form', [
             'projects' => Project::whereBelongsTo($user)->latest()->paginate(6),
-            'user' => $user
+            'user' => $user,
+            'project' => $this->project,
+            'id' => $this->project->id ?? null
+
 
         ]);
     }
-       /**
+    /**
      * Get the current user of the application.
      *
      * @return mixed
@@ -43,5 +94,16 @@ class UpdateProjectForm extends Component
     public function getUserProperty()
     {
         return Auth::user();
+    }
+
+    /**
+     * Update or Edit function
+     * When button for edit is clikced
+     */
+    public function edit($id)
+    {
+        $pt = new Project();
+        $this->project = $pt->find($id);
+
     }
 }

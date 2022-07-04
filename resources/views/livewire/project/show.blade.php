@@ -10,13 +10,13 @@
         <div class="mt-10 sm:mt-0">
             {{-- Create new Project Section --}}
             {{-- @dump($temp_data) --}}
-            @livewire('project.create-project-form', ['user' => $user, 'temp_data' => $temp_data])
+            @livewire('project.create-project-form', ['user' => $user, 'temp_data' => $temp_data, 'due_date_options' => 'No Due Date'])
         </div>
         <x-jet-section-border />
 
         {{-- Show list of projects section --}}
         <div class="mt-10 sm:mt-0">
-            @livewire('project.update-project-form',['projects' => $projects, 'user' => $user])
+            @livewire('project.update-project-form',['projects' => $projects, 'user' => $user, 'project' => $project, 'id' => ''])
         </div>
         <x-jet-section-border />
 

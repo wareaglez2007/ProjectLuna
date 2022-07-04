@@ -13,9 +13,7 @@
             ],
             p_label:@entangle('temp_data.priority'),
     })" x-init="init()">
-    @error('label')
-    <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
-    @enderror
+
             <button type="button" x-on:click="open = ! open" x-cloak
                 class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
                 aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
@@ -28,7 +26,7 @@
                 </svg>
                 <span class="hidden truncate sm:ml-2 sm:block"
                 :class="{ '': selectlabel === null, 'text-gray-900': !(selectlabel === null) }"
-                x-text="p_label != null ? p_label : (selectlabel === null ? 'Unlabelled' : selectlabel) "></span>
+                x-text="p_label != null ? p_label : (selectlabel === null ? 'Select Category' : selectlabel) "></span>
             </button>
 
 
@@ -46,7 +44,7 @@
 
                     <li class="relative px-3 py-2 cursor-default select-none" id="listbox-option-0"
                         role="option" x-data
-                        @click="$dispatch('input', label.name), selectlabel='Unlabelled', open=false"
+                        @click="$dispatch('input', label.name), selectlabel='Select Category', open=false"
                         @mouseenter="activeIndex = label.name"
                         @mouseleave="activeIndex = activeIndex"
                         :class="(p_label != null ? (label.name === p_label ? 'bg-gray-100' : 'bg-white') : (activeIndex === label.name) ? 'bg-gray-100' : 'bg-white')">
@@ -64,6 +62,9 @@
                 <!-- More items... -->
             </ul>
         </div>
+        @error('temp_data.priority')
+        <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
+        @enderror
     </div>
 
 

@@ -1,7 +1,7 @@
 <div>
-    {{-- @dump($user) --}}
     {{-- Project form goes here --}}
     <form action="#" class="relative" wire:submit.prevent="save()">
+        @csrf
         <div x-data="
 
         MainForm({
@@ -69,9 +69,7 @@
 
 
                     })" x-init="init()">
-                        @error('temp_data.phase')
-                        <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
-                        @enderror
+
                         <button x-on:click="open = ! open" type="button"
                             class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 rounded-full whitespace-nowrap bg-gray-50 hover:bg-gray-100 sm:px-3"
                             aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label" x-ref="button">
@@ -93,9 +91,7 @@
                             class="absolute right-0 z-10 py-3 mt-1 overflow-auto text-base bg-white rounded-lg shadow w-52 max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                             tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                             aria-activedescendant="listbox-option-0" x-show="open" @click.outside="open = false"
-                            wire:model="temp_data.phase"
-                            wire:click="savetempPhase()"
-                            x-cloak>
+                            wire:model="temp_data.phase" wire:click="savetempPhase()" x-cloak>
                             <template x-for="phaseitem in phases" :key="phaseitem.id">
 
                                 <li class="relative px-3 py-2 cursor-default select-none" id="listbox-option-0"
@@ -103,7 +99,6 @@
                                     @click="$dispatch('input', phaseitem.name), selectedphase='Select Phase', open=false"
                                     @mouseenter="phaseactiveIndex = phaseitem.name"
                                     @mouseleave="phaseactiveIndex = phaseactiveIndex"
-
                                     :class="(project_phase != null ? (phaseitem.name === project_phase ? 'bg-gray-100' : 'bg-white') : (phaseactiveIndex === phaseitem.name) ? 'bg-gray-100' : 'bg-white')">
 
                                     <div class="flex items-center">
@@ -119,14 +114,20 @@
                         </ul>
 
                     </div>
+                    @error('temp_data.phase')
+                    <span class="inline-flex px-2 py-2 text-sm text-red-500">{{ $message }}</span>
+                    @enderror
                 </div>
                 {{-- END of Project Phase --}}
                 {{-- Project Status --}}
-                <x-pick-labes />
+                <div>
+                    <x-pick-labes wire:model="temp_data.priority" id="label" />
+                </div>
                 {{-- End of Project Status --}}
                 {{-- Project Assignment --}}
-                <x-pick-a-date-alt-drop-down  wire:model='temp_data.due_date' />
-
+                <div>
+                    <x-pick-a-date-alt-drop-down wire:model='temp_data.due_date' id="due_date" />
+                </div>
                 {{--END of Project Assignment --}}
 
             </div>
@@ -191,7 +192,8 @@
     @push('scripts')
     <script>
         Livewire.on('saved', data => {
-            console.log(this.project);
+
+            console.log(this.data);
         localStorage.clear();
     });
         Livewire.on('reset-form', local_storage => {
@@ -204,8 +206,9 @@
     Livewire.on('savetempdudate', due_date => {
         console.log(due_date);
     });
+
     </script>
-    @endpush
+
     <script>
         function MainForm(vals){
         return{
@@ -242,12 +245,11 @@
              //Due date functions
         function selectDueDate(values){
             return{
-            due_date: values.due_date ?? 'select Due Date',
-            selecteddate:values.selecteddate,
-            open:values.open,
-            opencal:values.opencal,
-            init: function(){
+            due_date: values.due_date ?? 'Select Due Date',
 
+            init: function(){
+              //  this.due_date = "Select Due Date";
+                console.log(this.due_date)
              }
             }
         };
@@ -258,18 +260,19 @@
             selectIndex: values.selectIndex,
             activeIndex: values.activeIndex,
             labels: values.labels,
-            p_label:values.p_label,
+            p_label:values.p_label ?? "Select Category",
             selectlabel:values.selectlabel,
             init: function(){
+              //  this.p_label = "Select Category";
+                console.log(this.p_label);
             }
          }
         };
 
 
-
     </script>
 
 
-
+    @endpush
 
 </div>

@@ -3,6 +3,9 @@
     <!-- This example requires Tailwind CSS v2.0+ -->
     <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         @foreach ($projects as $project)
+
+
+        @csrf
         <li class="col-span-1 bg-white divide-y divide-gray-200 rounded-lg shadow">
             <div class="flex items-center justify-between w-full p-6 space-x-6">
                 <div class="flex-1 truncate">
@@ -16,7 +19,7 @@
                     <p class="mt-1 text-sm text-gray-500 truncate">{{$project->description}}</p>
                     <span
                         class="flex-shrink-0 inline-block px-2 py-0.5 text-white text-xs font-medium bg-indigo-400 rounded-full">{{$user->name}}</span>
-                        <span
+                    <span
                         class="flex-shrink-0 inline-block px-2 py-0.5 text-white text-xs font-medium bg-slate-700 rounded-full">{{$project->due_date}}</span>
                 </div>
 
@@ -37,7 +40,7 @@
                         </a>
                     </div>
                     <div class="flex flex-1 w-0 -ml-px">
-                        <a href="tel:+1-202-555-0170"
+                        <button type="submit" wire:click='edit({{$project->id}}); '
                             class="relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-medium border border-transparent rounded-br-lg text-slate-800 hover:text-slate-500">
                             <!-- Heroicon name: solid/phone -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
@@ -46,11 +49,13 @@
                                     d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                             </svg>
                             <span class="ml-3">Edit</span>
-                        </a>
+                            </a>
                     </div>
                 </div>
             </div>
+
         </li>
+
         @endforeach
     </ul>
 
@@ -58,19 +63,14 @@
         {{ $projects->links() }}
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <div>
+        <div x-data="{
+            project_name:@entangle('project.name'),
+            project_description:@entangle('project.description')}">
+            <span  x-text='project_name'></span>
+            <span  x-text='project_description'></span>
+        </div>
+    </div>
     @push('scripts')
     <script>
         function show(values){
@@ -82,7 +82,15 @@
                     }
                 }
              };
+        function UpdateDate(values){
+            return {
 
+
+                init: function(){
+
+                }
+            }
+        }
 
 
 
