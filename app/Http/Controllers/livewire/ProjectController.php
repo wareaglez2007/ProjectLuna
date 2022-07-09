@@ -13,14 +13,30 @@ use Illuminate\Support\Facades\Auth;
 class ProjectController extends Controller
 {
     use WithPagination;
+    public $show_all = true;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Project $project, Request $request, TempData $tempData)
     {
-        //
+        $this->show_all = true; //always true here
+        $temp = $tempData->where('user_id', Auth::user()->id)->first();
+
+        if ($temp ==  null) {
+            $temp = $tempData;
+        }
+        $user = $this->getUserProperty();
+        return view('livewire.project.show', [
+
+            'projects' => Project::whereBelongsTo($user)->latest()->paginate(6),
+            'user' => $request->user()->id,
+            'temp_data' => $temp,
+            'project' => '',
+            'single_project' => '',
+            'flag' => $this->show_all
+        ]);
     }
 
     /**
@@ -52,19 +68,21 @@ class ProjectController extends Controller
      */
     public function show(Project $project, Request $request, TempData $tempData)
     {
-
-        $temp = $tempData->where('user_id', Auth::user()->id)->first();
-
-        if ($temp ==  null) {
-            $temp = $tempData;
+        $item = $project->find($request->pr_id);
+    //    dd($item);
+        $this->show_all = false;
+        if ($item ==  null) {
+            $item = $project;
         }
         $user = $this->getUserProperty();
         return view('livewire.project.show', [
 
             'projects' => Project::whereBelongsTo($user)->latest()->paginate(6),
             'user' => $request->user()->id,
-            'temp_data' => $temp,
-            'project' => ''
+            'temp_data' => $item,
+            'project' => $item,
+            'flag' => $this->show_all,
+            'pr_id' => $request->pr_id
         ]);
     }
 
@@ -110,4 +128,5 @@ class ProjectController extends Controller
     {
         return Auth::user();
     }
+
 }

@@ -26,8 +26,8 @@ class UpdateProjectForm extends Component
      */
     public $project; //Use this for updating values
     public $p_id; // use this to get the ID
-    protected $listeners = ['refreshComponent' => 'refreshComponent'];
-
+    protected $listeners = ['refreshComponent' => 'refreshComponent', 'confirmingUserDeletion' => 'confirmingUserDeletion'];
+    public $confirmingUserDeletion = false;
     /** Protected Vars */
     protected $validatedData;
     /**
@@ -43,6 +43,7 @@ class UpdateProjectForm extends Component
         'project.phase' =>  'required',
         'project.due_date' =>  'required',
         'project.priority' =>  'required',
+        'project.id' => 'numeric'
 
     ];
 
@@ -64,7 +65,8 @@ class UpdateProjectForm extends Component
      * @param Project $project
      * @return void
      */
-    public function mount($id){
+    public function mount($id)
+    {
         $this->project = new Project();
         $this->project->id = $id;
     }
@@ -102,8 +104,18 @@ class UpdateProjectForm extends Component
      */
     public function edit($id)
     {
+        $this->confirmingUserDeletion = true;
         $pt = new Project();
         $this->project = $pt->find($id);
+    }
 
+    public function confirmingUserDeletion()
+    {
+        $this->confirmingUserDeletion = true;
+    }
+
+    public function show_item()
+    {
+        return redirect()->to('/secured/projects/' . $this->project->id . '');
     }
 }

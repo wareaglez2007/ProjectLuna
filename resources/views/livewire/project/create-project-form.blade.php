@@ -1,5 +1,8 @@
 <div>
     {{-- Project form goes here --}}
+    {{-- if there are no projects --}}
+
+
     <form action="#" class="relative" wire:submit.prevent="save()">
         @csrf
         <div x-data="

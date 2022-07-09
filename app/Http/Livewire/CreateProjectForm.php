@@ -84,7 +84,7 @@ class CreateProjectForm extends Component
     public function render()
     {
         $query = TempData::where('user_id', auth()->id())->first();
-        return view('livewire.project.create-project-form', ['temp_data' => $query,]);
+        return view('livewire.project.create-project-form', ['temp_data' => $query, 'flag' => true]);
     }
     /** Mount Model to the view */
     public function mount(Request $request, $temp_data)
@@ -185,6 +185,7 @@ class CreateProjectForm extends Component
      */
     public function resetValues()
     {
+        $this->resetErrorBag(); //Resets errors in component
         $this->temp_data = new TempData();
         $this->temp_data->where('user_id', auth()->id())->delete();
     }

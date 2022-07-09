@@ -32,8 +32,11 @@ Route::middleware([
             return view('dashboard');
         })->name('dashboard');
 
-        Route::get('/projects', [ProjectController::class, 'show'])
+        Route::get('/projects', [ProjectController::class, 'index'])
         ->name('project.show');
+
+        Route::get('/projects/{pr_id}', [ProjectController::class, 'show'])
+        ->name('project.show_item');
 
 });
 
