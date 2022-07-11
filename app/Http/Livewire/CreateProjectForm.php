@@ -162,13 +162,14 @@ class CreateProjectForm extends Component
 
         /** Reset vars for save */
         $this->reset(['project', 'date', 'label', 'temp_data']);
-        /**
-         * Event listener saved is called...
-         */
-        $this->emit('saved');
+
         /** POST SAVE */
         /** Reset Values for the next submissions */
         $this->project = new Project();
+         /**
+         * Event listener saved is called...
+         */
+        $this->emit('saved', ['count' => $this->project->where('created_by',auth()->id())->count(), 'message' => '']);
         $this->list_projects = $this->project->getall();
         //This ensures that the compontent is refreshed so it shows the added values.
         $this->emit('refreshComponent', ['projects' => $this->list_projects]);

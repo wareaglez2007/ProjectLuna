@@ -13,7 +13,7 @@ class BlankProjectWorkSpace extends Component
     public $project;
     public String $message = "";
     public bool $open = false; //Default to false
-    protected $listeners = ['show_modal' => 'ShowCreateProjectForm'];
+    protected $listeners = ['show_modal' => 'ShowCreateProjectForm', 'saved' => 'updateCount'];
     public $user;
     /**
      * We will need some rules for validation
@@ -36,8 +36,8 @@ class BlankProjectWorkSpace extends Component
      */
     public function render()
     {
-       $this->project = new Project();
-        $this->count = $this->project->where('created_by', auth()->id())->count();
+        $this->project = new Project();
+        $this->message = $this->updateCount();
 
         return view(
             'livewire.project.blank-project-work-space',
@@ -58,5 +58,18 @@ class BlankProjectWorkSpace extends Component
     {
         $this->open = true;
         $this->user = auth()->id();
+    }
+
+    public function updateCount()
+    {
+        $p_count = $this->project->where('created_by', auth()->id())->count();
+        if ($p_count == 1) {
+            $p_message = "You have 1 project.";
+        } else if ($p_count > 1) {
+            $p_message = "You have " . $p_count . " projects.";
+        } else {
+            $p_message = "You have no projects.";
+        }
+        return $p_message;
     }
 }

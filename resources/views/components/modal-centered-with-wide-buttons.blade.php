@@ -1,5 +1,5 @@
 {{-- $watch(&quot;open&quot;, o => !o &amp;&amp; window.setTimeout(() => (open = true), 1000)) --}}
-<div x-data="{ open: @entangle('open'), user:@entangle('user'), temp_data:@entangle('temp_data') }" @keydown.window.escape="open = false"
+<div x-data="{ open: @entangle('open'), user:@entangle('user') }" @keydown.window.escape="open = false"
     x-init="" x-show="open" x-cloak
     class="relative z-10" aria-labelledby="modal-title" x-ref="dialog" aria-modal="true">
 
