@@ -87,11 +87,11 @@ class CreateProjectForm extends Component
         return view('livewire.project.create-project-form', ['temp_data' => $query, 'flag' => true]);
     }
     /** Mount Model to the view */
-    public function mount(Request $request, $temp_data)
+    public function mount()
     {
         $this->user = auth()->id(); //Better use of it
         $this->project = new Project();
-        $this->temp_data = $temp_data;
+        $this->temp_data = TempData::where('user_id', auth()->id())->first() ?? new TempData();
     }
     /**
      * Functions that will call temp save data
@@ -119,7 +119,6 @@ class CreateProjectForm extends Component
     public function savetemp($data = null)
     {
         $this->temp_data->user_id = $this->user;
-
         $this->temp =  new TempData();
         if ($this->temp->where('user_id', auth()->id())->first() != null) {
             $this->temp->where('user_id', $this->user)->update([

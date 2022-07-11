@@ -1,7 +1,7 @@
 <div>
 
     <!-- This example requires Tailwind CSS v2.0+ -->
-    <div role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div role="list" class="grid grid-cols-1 gap-6 cursor-pointer sm:grid-cols-2 lg:grid-cols-3">
         @foreach ($projects as $project)
         <!-- This example requires Tailwind CSS v2.0+ -->
         <div class="overflow-hidden bg-white rounded-lg shadow" wire:click='edit({{$project->id}});'>
