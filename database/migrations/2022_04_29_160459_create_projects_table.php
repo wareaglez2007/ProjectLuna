@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->index();
             $table->string('name');
             $table->longText('description')->nullable();
             $table->string('phase')->default('Not Started')->nullable();
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->timestamp('due_date')->nullable();
             $table->integer('has_documents')->default(0);
             $table->integer('has_images')->default(0);
+
             $table->string('assinged_to')->references('id')->on('users');
             $table->string('reassigned_by')->references('id')->on('users')->nullabel();
             $table->timestamp('assigned_date')->nullable();

@@ -8,11 +8,13 @@ use App\Models\TempData;
 use Illuminate\Http\Request;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Gate;
+use App\Models\User;
 
 class ProjectController extends Controller
 {
     use WithPagination;
+
     public $show_all = true;
     /**
      * Display a listing of the resource.
@@ -69,21 +71,25 @@ class ProjectController extends Controller
     public function show(Project $project, Request $request, TempData $tempData)
     {
         $item = $project->find($request->pr_id);
-    //    dd($item);
         $this->show_all = false;
         if ($item ==  null) {
             $item = $project;
         }
         $user = $this->getUserProperty();
-        return view('livewire.project.show', [
+        $response = Gate::inspect('show-project', $item);
+        if ($response->allowed()) {
+            return view('livewire.project.show', [
 
-            'projects' => Project::whereBelongsTo($user)->latest()->paginate(6),
-            'user' => $request->user()->id,
-            'temp_data' => $item,
-            'project' => $item,
-            'flag' => $this->show_all,
-            'pr_id' => $request->pr_id
-        ]);
+                'projects' => Project::whereBelongsTo($user)->latest()->paginate(6),
+                'user' => $request->user()->id,
+                'temp_data' => $item,
+                'project' => $item,
+                'flag' => $this->show_all,
+                'pr_id' => $request->pr_id
+            ]);
+        } else {
+           abort(403);
+        }
     }
 
     /**
@@ -128,5 +134,4 @@ class ProjectController extends Controller
     {
         return Auth::user();
     }
-
 }

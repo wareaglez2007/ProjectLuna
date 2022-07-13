@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Jetstream\Jetstream;
 
 class Project extends Model
 {
     use HasFactory;
-
 
     /**
      * The attributes that are mass assignable.
@@ -16,6 +16,7 @@ class Project extends Model
      * @var string[]
      */
     protected $fillable = [
+        'user_id',
         'name',
         'description',
         'phase',
@@ -46,5 +47,15 @@ class Project extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+       /**
+     * Get the owner of the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function owner()
+    {
+        return $this->belongsTo(Jetstream::userModel(), 'created_by');
     }
 }

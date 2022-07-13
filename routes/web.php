@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\livewire\ProjectController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,9 @@ Route::get('/', function () {
 /**
  * Backend access
  */
+
+// Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authSessionMiddleware, 'verified']))], function () {
+// });
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

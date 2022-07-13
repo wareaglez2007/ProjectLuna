@@ -146,10 +146,12 @@ class CreateProjectForm extends Component
     {
         /** Validated data get saved */
         $this->validatedData = $this->validate();
+        $this->project->user_id = Auth::user()->id;
         $this->project->created_by = Auth::user()->id;
         $this->project->assinged_to =  Auth::user()->id;
         $this->project->reassigned_by = Auth::user()->id;
         $this->project->create([
+            "user_id" => $this->project->user_id,
             "name" => $this->validatedData['temp_data']["name"],
             "description" => $this->validatedData['temp_data']["description"],
             "phase" => $this->validatedData['temp_data']["phase"],
