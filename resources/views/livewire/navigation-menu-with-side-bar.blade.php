@@ -58,7 +58,7 @@
             x-transition:leave="transition ease-in-out duration-300 transform" x-transition:leave-start="translate-x-0"
             x-transition:leave-end="-translate-x-full"
             x-description="Off-canvas menu, show/hide based on off-canvas menu state."
-            class="relative flex w-full max-w-xs flex-1 flex-col bg-gray-800 pt-5 pb-4">
+            class="relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4 bg-gray-800">
             <!--
           Close button, show/hide based on off-canvas menu state.
 
@@ -73,14 +73,14 @@
                 x-transition:enter-end="opacity-100" x-transition:leave="ease-in-out duration-300"
                 x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
                 x-description="Close button, show/hide based on off-canvas menu state."
-                class="absolute top-0 right-0 -mr-12 pt-2">
+                class="absolute top-0 right-0 pt-2 -mr-12">
                 <button type="button"
-                    class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    class="flex items-center justify-center w-10 h-10 ml-1 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                     @click="open = false">
 
                     <span class="sr-only">Close sidebar</span>
                     <!-- Heroicon name: outline/x -->
-                    <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M6 18L18 6M6 6l12 12" />
@@ -88,14 +88,14 @@
                 </button>
             </div>
 
-            <div class="flex flex-shrink-0 items-center px-4">
-                <img class="h-8 w-auto"
+            <div class="flex items-center flex-shrink-0 px-4">
+                <img class="w-auto h-8"
                     src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow">
             </div>
-            <div class="mt-5 h-0 flex-1 overflow-y-auto">
-                <nav class="space-y-1 px-2">
+            <div class="flex-1 h-0 mt-5 overflow-y-auto">
+                <nav class="px-2 space-y-1">
                     <x-current-active-links href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-300" x-state:on="Current" x-state:off="Default"
+                        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-gray-300" x-state:on="Current" x-state:off="Default"
                             x-state-description="Current: &quot;text-gray-300&quot;, Default: &quot;text-gray-400 group-hover:text-gray-300&quot;"
                             x-description="Heroicon name: outline/home" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -107,7 +107,7 @@
                     </x-current-active-links>
                     <x-current-active-links href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
                         :active="request()->routeIs('teams.show')">
-                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
+                        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-gray-400 group-hover:text-gray-300"
                             x-state-description="undefined: &quot;text-gray-300&quot;, undefined: &quot;text-gray-400 group-hover:text-gray-300&quot;"
                             x-description="Heroicon name: outline/users" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -118,9 +118,9 @@
                         {{ __('Teams') }}
                     </x-current-active-links>
 
-                    <x-current-active-links href="{{ route('project.show') }}" :active="request()->routeIs('project.show')">
+                    <x-current-active-links href="{{ route('project.show') }}" :active="request()->routeIs('project.show') || request()->routeIs('project.show_item')">
                         <!-- Heroicon name: outline/folder -->
-                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
+                        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -130,9 +130,9 @@
                     </x-current-active-links>
 
                     <a href="#"
-                        class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                        class="flex items-center px-2 py-2 text-base font-medium text-gray-300 rounded-md group hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/calendar -->
-                        <svg class="mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
+                        <svg class="flex-shrink-0 w-6 h-6 mr-4 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -142,9 +142,9 @@
                     </a>
 
                     <a href="#"
-                        class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                        class="flex items-center px-2 py-2 text-base font-medium text-gray-300 rounded-md group hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/inbox -->
-                        <svg class="mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
+                        <svg class="flex-shrink-0 w-6 h-6 mr-4 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -154,9 +154,9 @@
                     </a>
 
                     <a href="#"
-                        class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                        class="flex items-center px-2 py-2 text-base font-medium text-gray-300 rounded-md group hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/chart-bar -->
-                        <svg class="mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
+                        <svg class="flex-shrink-0 w-6 h-6 mr-4 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -168,7 +168,7 @@
             </div>
         </div>
 
-        <div class="w-14 flex-shrink-0" aria-hidden="true">
+        <div class="flex-shrink-0 w-14" aria-hidden="true">
             <!-- Dummy element to force sidebar to shrink to fit close icon -->
         </div>
     </div>
@@ -176,15 +176,15 @@
     <!-- Static sidebar for desktop -->
     <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
         <!-- Sidebar component, swap this element with another sidebar if you like -->
-        <div class="flex min-h-0 flex-1 flex-col bg-gray-800">
-            <div class="flex h-16 flex-shrink-0 items-center bg-gray-900 px-4">
-                <img class="h-8 w-auto"
+        <div class="flex flex-col flex-1 min-h-0 bg-gray-800">
+            <div class="flex items-center flex-shrink-0 h-16 px-4 bg-gray-900">
+                <img class="w-auto h-8"
                     src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow">
             </div>
-            <div class="flex flex-1 flex-col overflow-y-auto">
-                <nav class="flex-1 space-y-1 px-2 py-4">
+            <div class="flex flex-col flex-1 overflow-y-auto">
+                <nav class="flex-1 px-2 py-4 space-y-1">
                     <x-current-active-links href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-300" x-state:on="Current" x-state:off="Default"
+                        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-gray-300" x-state:on="Current" x-state:off="Default"
                             x-state-description="Current: &quot;text-gray-300&quot;, Default: &quot;text-gray-400 group-hover:text-gray-300&quot;"
                             x-description="Heroicon name: outline/home" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -197,7 +197,7 @@
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                     <x-current-active-links href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
                         :active="request()->routeIs('teams.show')">
-                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
+                        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-gray-400 group-hover:text-gray-300"
                             x-state-description="undefined: &quot;text-gray-300&quot;, undefined: &quot;text-gray-400 group-hover:text-gray-300&quot;"
                             x-description="Heroicon name: outline/users" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -208,9 +208,9 @@
                         {{ __('Teams') }}
                     </x-current-active-links>
 
-                    <x-current-active-links href="{{ route('project.show') }}" :active="request()->routeIs('project.show')">
+                    <x-current-active-links href="{{ route('project.show') }}" :active="request()->routeIs('project.show') || request()->routeIs('project.show_item')">
                         <!-- Heroicon name: outline/folder -->
-                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
+                        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -220,9 +220,9 @@
                     </x-current-active-links>
 
                     <a href="#"
-                        class="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                        class="flex items-center px-2 py-2 text-sm font-medium text-gray-300 rounded-md group hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/calendar -->
-                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
+                        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -232,9 +232,9 @@
                     </a>
 
                     <a href="#"
-                        class="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                        class="flex items-center px-2 py-2 text-sm font-medium text-gray-300 rounded-md group hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/inbox -->
-                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
+                        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -244,9 +244,9 @@
                     </a>
 
                     <a href="#"
-                        class="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                        class="flex items-center px-2 py-2 text-sm font-medium text-gray-300 rounded-md group hover:bg-gray-700 hover:text-white">
                         <!-- Heroicon name: outline/chart-bar -->
-                        <svg class="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300"
+                        <svg class="flex-shrink-0 w-6 h-6 mr-3 text-gray-400 group-hover:text-gray-300"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                             aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -259,12 +259,12 @@
         </div>
     </div>
     <div class="flex flex-col md:pl-64">
-        <div class="sticky top-0 z-10 flex h-16 flex-shrink-0 bg-white shadow">
+        <div class="sticky top-0 z-10 flex flex-shrink-0 h-16 bg-white shadow">
             <button type="button"
-                class="border-r border-gray-200 px-4 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+                class="px-4 text-gray-500 border-r border-gray-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
                 @click="open = true">
                 <span class="sr-only">Open sidebar</span>
-                <svg class="h-6 w-6" x-description="Heroicon name: outline/menu-alt-2"
+                <svg class="w-6 h-6" x-description="Heroicon name: outline/menu-alt-2"
                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                     aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7">
@@ -272,14 +272,14 @@
                 </svg>
             </button>
             {{-- Search, Notifications, teams, settings dropdown --}}
-            <div class="flex flex-1 justify-between px-4">
+            <div class="flex justify-between flex-1 px-4">
                 <div class="flex flex-1">
                     <form class="flex w-full md:ml-0" action="#" method="GET">
                         <label for="search-field" class="sr-only">Search</label>
                         <div class="relative w-full text-gray-400 focus-within:text-gray-600">
-                            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center">
+                            <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
                                 <!-- Heroicon name: solid/search -->
-                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                     fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd"
                                         d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
@@ -287,18 +287,18 @@
                                 </svg>
                             </div>
                             <input id="search-field"
-                                class="block h-full w-full border-transparent py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm"
+                                class="block w-full h-full py-2 pl-8 pr-3 text-gray-900 placeholder-gray-500 border-transparent focus:border-transparent focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm"
                                 placeholder="Search" type="search" name="search">
                         </div>
                     </form>
                 </div>
                 {{-- Right top side of backend navigation --}}
-                <div class="ml-4 flex items-center md:ml-6">
+                <div class="flex items-center ml-4 md:ml-6">
                     <button type="button"
-                        class="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        class="p-1 text-gray-400 bg-white rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         <span class="sr-only">View notifications</span>
                         <!-- Heroicon name: outline/bell -->
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
@@ -311,16 +311,16 @@
                         <div>
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                 <button
-                                    class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    class="flex items-center max-w-xs text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                     id="user-menu-button" x-ref="button" @click=" open= !open">
-                                    <img class="h-8 w-8 rounded-full object-cover"
+                                    <img class="object-cover w-8 h-8 rounded-full"
                                         src="{{ Auth::user()->profile_photo_url }}"
                                         alt="{{ Auth::user()->name }}" />
                                 </button>
                             @else
                                 <span class="inline-flex rounded-md">
                                     <button type="button"
-                                        class="flex max-w-xs items-center rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                        class="flex items-center max-w-xs text-sm bg-white rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                         id="user-menu-button" x-ref="button" @click=" open= !open">
                                         {{ Auth::user()->name }}
                                         <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -340,7 +340,7 @@
                             x-transition:leave="transition ease-in duration-75"
                             x-transition:leave-start="transform opacity-100 scale-100"
                             x-transition:leave-end="transform opacity-0 scale-95"
-                            class="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                            class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                             x-ref="menu-items" x-description="Dropdown menu, show/hide based on menu state." role="menu"
                             aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1"
                             @keydown.tab="open = false" @keydown.enter.prevent="open = false"

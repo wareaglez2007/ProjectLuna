@@ -1,4 +1,4 @@
-<div>
+<div class="min-w-full h-96">
     {{-- Project form goes here --}}
     {{-- if there are no projects --}}
 

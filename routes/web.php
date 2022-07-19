@@ -24,8 +24,6 @@ Route::get('/', function () {
  * Backend access
  */
 
-// Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authSessionMiddleware, 'verified']))], function () {
-// });
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
